@@ -42,5 +42,4 @@ credentials.properties
 
 # Other
 *.class
-
 /wip*
