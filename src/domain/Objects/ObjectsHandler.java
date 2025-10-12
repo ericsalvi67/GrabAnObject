@@ -1,0 +1,24 @@
+package domain.Objects;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import infrastructure.IPostgreSQLConnector;
+
+public class ObjectsHandler {
+    private final IPostgreSQLConnector connector;
+
+    public ObjectsHandler(IPostgreSQLConnector connector) {
+        this.connector = connector;
+    }
+
+    public List<ObjectDTO> listAll(String url, String user, String password) throws SQLException {
+        ObjectsRepository repo = new ObjectsRepository(connector);
+        try {
+            repo.open(url, user, password);
+            return repo.getAllObjects();
+        } finally {
+            repo.close();
+        }
+    }
+}

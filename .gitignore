@@ -1,0 +1,46 @@
+# Java compiled class files
+*.class
+
+# Compiled output
+/bin/
+/out/
+/target/
+/build/
+
+# IDE files
+/.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+nbproject/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment / secrets
+.env
+.env.local
+credentials.properties
+*.keystore
+
+# Build tool caches
+.gradle/
+.gradle
+/.mvn/
+
+# JARs (ignore if you don't commit libs; adjust if you store third-party jars in lib/)
+*.jar
+
+# Database files
+*.db
+
+# Other
+*.class
+
+/wip*
