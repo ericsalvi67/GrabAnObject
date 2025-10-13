@@ -6,11 +6,11 @@ import java.util.List;
 
 import interfaces.IPostgreSQLConnector;
 
-public class ObjectsRepository {
+public class ObjectsQuery {
     private final IPostgreSQLConnector connector;
     private Connection connection;
 
-    public ObjectsRepository(IPostgreSQLConnector connector) {
+    public ObjectsQuery(IPostgreSQLConnector connector) {
         this.connector = connector;
     }
 

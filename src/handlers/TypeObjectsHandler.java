@@ -14,7 +14,7 @@ public class TypeObjectsHandler {
     }
 
     public List<TypeObjectDTO> listAll(String url, String user, String password) throws SQLException {
-        TypeObjectsRepository repo = new TypeObjectsRepository(connector);
+        TypeObjectsQuery repo = new TypeObjectsQuery(connector);
         try {
             repo.open(url, user, password);
             return repo.getAllTypes();

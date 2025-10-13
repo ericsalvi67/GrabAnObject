@@ -14,7 +14,7 @@ public class ObjectsHandler {
     }
 
     public List<ObjectDTO> listAll(String url, String user, String password) throws SQLException {
-        ObjectsRepository repo = new ObjectsRepository(connector);
+        ObjectsQuery repo = new ObjectsQuery(connector);
         try {
             repo.open(url, user, password);
             return repo.getAllObjects();

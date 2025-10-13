@@ -14,7 +14,7 @@ public class UsersHandler {
     }
 
     public List<UsersDTO> listAll(String url, String user, String password) throws SQLException {
-        UsersRepository repo = new UsersRepository(connector);
+        UsersQuery repo = new UsersQuery(connector);
         try {
             repo.open(url, user, password);
             return repo.getAllUsers();

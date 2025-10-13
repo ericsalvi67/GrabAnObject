@@ -14,7 +14,7 @@ public class MaintenanceHandler {
     }
 
     public List<MaintenanceDTO> listAll(String url, String user, String password) throws SQLException {
-        MaintenanceRepository repo = new MaintenanceRepository(connector);
+        MaintenanceQuery repo = new MaintenanceQuery(connector);
         try {
             repo.open(url, user, password);
             return repo.getAllMaintenance();
