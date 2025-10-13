@@ -7,8 +7,8 @@ public class UsersDTO {
     private int id;
     private String name;
     private String email;
-    // mapping for TIMESTAMPTZ -> lastModification as requested
     private OffsetDateTime lastModification;
+    private boolean deleted;
 
     public UsersDTO() {}
 
@@ -17,11 +17,7 @@ public class UsersDTO {
         this.name = name;
         this.email = email;
         this.lastModification = lastModification;
-    }
-
-    public UsersDTO(String name, String email) {
-        this.name = name;
-        this.email = email;
+        this.deleted = false;
     }
 
     public int getId() { return id; }
@@ -35,4 +31,7 @@ public class UsersDTO {
 
     public OffsetDateTime getLastModification() { return lastModification; }
     public void setLastModification(OffsetDateTime lastModification) { this.lastModification = lastModification; }
+
+    public boolean isDeleted() { return deleted; }
+    public void setDeleted(boolean deleted) { this.deleted = deleted; }
 }

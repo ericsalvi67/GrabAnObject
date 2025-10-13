@@ -5,10 +5,10 @@ import java.util.List;
 
 import infrastructure.IPostgreSQLConnector;
 
-public class UserHandler {
+public class UsersHandler {
     private final IPostgreSQLConnector connector;
 
-    public UserHandler(IPostgreSQLConnector connector) {
+    public UsersHandler(IPostgreSQLConnector connector) {
         this.connector = connector;
     }
 
