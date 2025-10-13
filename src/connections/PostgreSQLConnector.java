@@ -1,8 +1,7 @@
 package connections;
 
 import java.sql.*;
-
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 
 /**
  * Simple JDBC implementation of PostgreSQLConnector.

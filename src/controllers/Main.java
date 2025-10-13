@@ -1,11 +1,8 @@
 package controllers;
 
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 import connections.PostgreSQLConnector;
-import aggregates.Users.UserHandler;
-import aggregates.Objects.ObjectsHandler;
-import aggregates.TypeObjects.TypeObjectsHandler;
-import aggregates.Maintenance.MaintenanceHandler;
+import handlers.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +12,7 @@ public class Main {
 
         IPostgreSQLConnector connector = new PostgreSQLConnector();
 
-        UserHandler userHandler = new UserHandler(connector);
+        UsersHandler userHandler = new UsersHandler(connector);
         ObjectsHandler objectsHandler = new ObjectsHandler(connector);
         TypeObjectsHandler typeHandler = new TypeObjectsHandler(connector);
         MaintenanceHandler maintenanceHandler = new MaintenanceHandler(connector);

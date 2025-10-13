@@ -1,9 +1,10 @@
-package domain.Maintenance;
+package handlers;
 
 import java.sql.SQLException;
 import java.util.List;
+import aggregates.Maintenance.*;
 
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 
 public class MaintenanceHandler {
     private final IPostgreSQLConnector connector;

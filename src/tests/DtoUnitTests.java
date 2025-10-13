@@ -1,9 +1,9 @@
 package tests;
 
-import domain.Users.UsersDTO;
-import domain.Objects.ObjectDTO;
-import domain.TypeObjects.TypeObjectDTO;
-import domain.Maintenance.MaintenanceDTO;
+import aggregates.Users.*;
+import aggregates.TypeObjects.*;
+import aggregates.Objects.*;
+import aggregates.Maintenance.*;
 
 import java.time.OffsetDateTime;
 

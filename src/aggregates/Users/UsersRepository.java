@@ -1,13 +1,10 @@
-package domain.Users;
+package aggregates.Users;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 
 public class UsersRepository {
 

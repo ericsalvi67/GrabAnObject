@@ -1,4 +1,4 @@
-package domain.Users;
+package aggregates.Users;
 
 import java.time.OffsetDateTime;
 

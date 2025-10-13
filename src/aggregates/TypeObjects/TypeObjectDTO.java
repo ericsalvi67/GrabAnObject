@@ -1,4 +1,4 @@
-package domain.TypeObjects;
+package aggregates.TypeObjects;
 
 import java.time.OffsetDateTime;
 

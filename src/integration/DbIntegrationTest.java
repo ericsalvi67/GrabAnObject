@@ -1,7 +1,7 @@
 package integration;
 
 import connections.PostgreSQLConnector;
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 import aggregates.Users.UsersRepository;
 import aggregates.Users.UsersDTO;
 import aggregates.TypeObjects.TypeObjectsRepository;

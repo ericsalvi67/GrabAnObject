@@ -1,4 +1,4 @@
-package domain.Maintenance;
+package aggregates.Maintenance;
 
 import java.time.OffsetDateTime;
 

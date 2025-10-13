@@ -1,9 +1,10 @@
-package domain.Users;
+package handlers;
 
 import java.sql.SQLException;
 import java.util.List;
+import aggregates.Users.*;
 
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 
 public class UsersHandler {
     private final IPostgreSQLConnector connector;

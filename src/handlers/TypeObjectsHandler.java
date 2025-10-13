@@ -1,9 +1,10 @@
-package domain.TypeObjects;
+package handlers;
 
 import java.sql.SQLException;
 import java.util.List;
+import aggregates.TypeObjects.*;
 
-import infrastructure.IPostgreSQLConnector;
+import interfaces.IPostgreSQLConnector;
 
 public class TypeObjectsHandler {
     private final IPostgreSQLConnector connector;

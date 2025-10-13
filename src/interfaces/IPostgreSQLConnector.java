@@ -1,4 +1,4 @@
-package infrastructure;
+package interfaces;
 
 import java.sql.*;
 
