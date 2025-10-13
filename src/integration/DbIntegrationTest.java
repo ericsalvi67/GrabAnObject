@@ -2,11 +2,11 @@ package integration;
 
 import connections.PostgreSQLConnector;
 import infrastructure.IPostgreSQLConnector;
-import domain.Users.UsersRepository;
-import domain.Users.UsersDTO;
-import domain.TypeObjects.TypeObjectsRepository;
-import domain.Objects.ObjectsRepository;
-import domain.Maintenance.MaintenanceRepository;
+import aggregates.Users.UsersRepository;
+import aggregates.Users.UsersDTO;
+import aggregates.TypeObjects.TypeObjectsRepository;
+import aggregates.Objects.ObjectsRepository;
+import aggregates.Maintenance.MaintenanceRepository;
 
 import java.util.List;
 

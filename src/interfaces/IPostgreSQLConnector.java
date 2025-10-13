@@ -1,8 +1,6 @@
 package infrastructure;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public interface IPostgreSQLConnector {
     Connection connect(String url, String user, String password) throws SQLException;

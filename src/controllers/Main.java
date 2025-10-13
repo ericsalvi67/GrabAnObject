@@ -2,16 +2,16 @@ package controllers;
 
 import infrastructure.IPostgreSQLConnector;
 import connections.PostgreSQLConnector;
-import domain.Users.UserHandler;
-import domain.Objects.ObjectsHandler;
-import domain.TypeObjects.TypeObjectsHandler;
-import domain.Maintenance.MaintenanceHandler;
+import aggregates.Users.UserHandler;
+import aggregates.Objects.ObjectsHandler;
+import aggregates.TypeObjects.TypeObjectsHandler;
+import aggregates.Maintenance.MaintenanceHandler;
 
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:postgresql://localhost:5432/yourdb";
-        String user = "yourusername";
-        String password = "yourpassword";
+        String url = "jdbc:postgresql://localhost:5432/GAO_DB";
+        String user = "univatesST";
+        String password = "UniProject2.";
 
         IPostgreSQLConnector connector = new PostgreSQLConnector();
 
