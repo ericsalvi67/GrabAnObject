@@ -3,11 +3,12 @@ package domain.Objects;
 import java.time.OffsetDateTime;
 
 public class ObjectDTO {
-    private final int id;
-    private final String name;
-    private final Integer typeId;
-    private final Integer createdBy;
-    private final OffsetDateTime lastModification;
+    private int id;
+    private String name;
+    private Integer typeId;
+    private Integer createdBy;
+    private OffsetDateTime lastModification;
+    private boolean isDeleted;
 
     public ObjectDTO(int id, String name, Integer typeId, Integer createdBy, OffsetDateTime lastModification) {
         this.id = id;
@@ -22,4 +23,5 @@ public class ObjectDTO {
     public Integer getTypeId() { return typeId; }
     public Integer getCreatedBy() { return createdBy; }
     public OffsetDateTime getLastModification() { return lastModification; }
+    public boolean isDeleted() { return isDeleted; }
 }

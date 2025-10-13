@@ -3,11 +3,12 @@ package domain.Maintenance;
 import java.time.OffsetDateTime;
 
 public class MaintenanceDTO {
-    private final int id;
-    private final int objectId;
-    private final String description;
-    private final Integer performedBy;
-    private final OffsetDateTime lastModification;
+    private int id;
+    private int objectId;
+    private String description;
+    private Integer performedBy;
+    private OffsetDateTime lastModification;
+    private boolean isDeleted;
 
     public MaintenanceDTO(int id, int objectId, String description, Integer performedBy, OffsetDateTime lastModification) {
         this.id = id;
@@ -22,4 +23,5 @@ public class MaintenanceDTO {
     public String getDescription() { return description; }
     public Integer getPerformedBy() { return performedBy; }
     public OffsetDateTime getLastModification() { return lastModification; }
+    public boolean isDeleted() { return isDeleted; }
 }
