@@ -1,15 +1,12 @@
 package aggregates.Users;
 
-import java.util.Date;
+import interfaces.ERDataResources;
 
-public class UsersDTO{
+public class UsersDTO extends ERDataResources {
 
     public int id;
     public String name;
     public String email;
-
-    public Date last_modification;
-    public boolean deleted;
 
     public UsersDTO(){}
 

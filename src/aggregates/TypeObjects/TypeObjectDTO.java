@@ -1,24 +1,21 @@
 package aggregates.TypeObjects;
 
-import java.util.Date;
+import interfaces.ERDataResources;
 
-public class TypeObjectDTO{
+public class TypeObjectDTO extends ERDataResources {
 
     public int id;
-    public char type_type;
+    public String type_name;
     public String description;
-
-    public Date last_modification;
-    public boolean deleted;
 
     public TypeObjectDTO() {}
 
     public TypeObjectDTO(int id, 
-                         char type_type, 
+                         String type_name, 
                          String description, 
                          boolean deleted) {
         this.id = id;
-        this.type_type = type_type;
+        this.type_name = type_name;
         this.description = description;
         this.deleted = deleted;
     }

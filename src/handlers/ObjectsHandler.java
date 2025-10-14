@@ -4,22 +4,18 @@ import java.sql.SQLException;
 import java.util.List;
 import aggregates.Objects.*;
 
-import interfaces.IPostgreSQLConnector;
+import interfaces.IConnectionString;
+import lib.ConnectionFactory;
 
 public class ObjectsHandler {
-    private final IPostgreSQLConnector connector;
+    private final ConnectionFactory factory;
 
-    public ObjectsHandler(IPostgreSQLConnector connector) {
-        this.connector = connector;
+    public ObjectsHandler(IConnectionString conn) {
+        this.factory = new ConnectionFactory(conn);
     }
 
-    public List<ObjectDTO> listAll(String url, String user, String password) throws SQLException {
-        ObjectsQuery repo = new ObjectsQuery(connector);
-        try {
-            repo.open(url, user, password);
-            return repo.getAllObjects();
-        } finally {
-            repo.close();
-        }
+    public List<ObjectDTO> listAll() throws SQLException {
+        ObjectsQuery repo = new ObjectsQuery(factory);
+        return repo.getAllObjects();
     }
 }
