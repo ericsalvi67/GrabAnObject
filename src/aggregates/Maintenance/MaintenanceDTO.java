@@ -1,39 +1,22 @@
 package aggregates.Maintenance;
 
-import java.time.OffsetDateTime;
+public class MaintenanceDTO implements IERBusinessKey {
 
-public class MaintenanceDTO {
-    private int id;
-    private int objectId;
-    private String description;
-    private Integer performedBy;
-    private OffsetDateTime lastModification;
-    private boolean deleted;
+    public int er_id;
+    public String description;
+    public int er_user_id;
 
-    public MaintenanceDTO(int id, int objectId, String description, Integer performedBy, OffsetDateTime lastModification) {
-        this.id = id;
-        this.objectId = objectId;
+    public DateTime last_modification;
+    public boolean deleted;
+
+    public MaintenanceDTO(int er_id, String description, int er_user_id) {
+        this.er_id = er_id;
         this.description = description;
-        this.performedBy = performedBy;
-        this.lastModification = lastModification;
-        this.deleted = false;
+        this.er_user_id = er_user_id;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public String getBusinessKey(){
+        return er_user_id + "|" + er_id;
+    }
 
-    public int getObjectId() { return objectId; }
-    public void setObjectId(int objectId) { this.objectId = objectId; }
-
-    public String getDescription() { return description; }
-    public void setDescription(String description) { this.description = description; }
-
-    public Integer getPerformedBy() { return performedBy; }
-    public void setPerformedBy(Integer performedBy) { this.performedBy = performedBy; }
-
-    public OffsetDateTime getLastModification() { return lastModification; }
-    public void setLastModification(OffsetDateTime lastModification) { this.lastModification = lastModification; }
-
-    public boolean isDeleted() { return deleted; }
-    public void setDeleted(boolean deleted) { this.deleted = deleted; }
 }
