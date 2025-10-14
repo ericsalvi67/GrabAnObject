@@ -1,22 +1,23 @@
 package aggregates.Maintenance;
 
-public class MaintenanceDTO implements IERBusinessKey {
+import java.util.Date;
+public class MaintenanceDTO{
 
     public int er_id;
-    public String description;
     public int er_user_id;
+    public String description;
 
-    public DateTime last_modification;
+    public Date last_modification;
     public boolean deleted;
 
-    public MaintenanceDTO(int er_id, String description, int er_user_id) {
+    public MaintenanceDTO(int er_id, 
+                          int er_user_id, 
+                          String description, 
+                          boolean deleted) {
         this.er_id = er_id;
-        this.description = description;
         this.er_user_id = er_user_id;
-    }
-
-    public String getBusinessKey(){
-        return er_user_id + "|" + er_id;
+        this.description = description;
+        this.deleted = deleted;
     }
 
 }
