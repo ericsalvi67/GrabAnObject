@@ -4,20 +4,20 @@ import java.util.Date;
 
 public class UsersDTO{
 
-    public int er_id;
+    public int id;
     public String name;
     public String email;
 
     public Date last_modification;
     public boolean deleted;
 
-    public usersDTO(){}
+    public UsersDTO(){}
 
-    public usersDTO(int er_id, 
+    public UsersDTO(int id, 
                     String name, 
                     String email, 
                     boolean deleted) {
-        this.er_id = er_id;
+        this.id = id;
         this.name = name;
         this.email = email;
         this.deleted = deleted;

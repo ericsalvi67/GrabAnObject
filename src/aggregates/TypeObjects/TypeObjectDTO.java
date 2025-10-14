@@ -4,21 +4,21 @@ import java.util.Date;
 
 public class TypeObjectDTO{
 
-    public int er_id;
-    public String type_name;
+    public int id;
+    public char type_type;
     public String description;
 
     public Date last_modification;
     public boolean deleted;
 
-    public typeObjectDTO(){}
+    public TypeObjectDTO() {}
 
-    public typeObjectDTO(int er_id, 
-                        String type_name, 
-                        String description, 
-                        boolean deleted) {
-        this.er_id = er_id;
-        this.type_name = type_name;
+    public TypeObjectDTO(int id, 
+                         char type_type, 
+                         String description, 
+                         boolean deleted) {
+        this.id = id;
+        this.type_type = type_type;
         this.description = description;
         this.deleted = deleted;
     }

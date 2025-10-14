@@ -4,22 +4,27 @@ import java.util.Date;
 
 public class ObjectDTO{
 
-    public int er_id;
-    public int er_type_id;
-    public String name;
+    public int id;
+    public int type_id;
+    public char type_type;
+    public String object_name;
     public char status;
 
     public Date lastModification;
     public boolean deleted;
 
-    public objectDTO(int er_id, 
-                     int er_type_id, 
-                    String name, 
-                    char status, 
-                    boolean deleted) {
-        this.er_id = er_id;
-        this.er_type_id = er_type_id;
-        this.name = name;
+    public ObjectDTO() {}
+
+    public ObjectDTO(int id,
+                     int type_id, 
+                     char type_type, 
+                     String object_name, 
+                     char status, 
+                     boolean deleted) {
+        this.id = id;
+        this.type_id = type_id;
+        this.type_type = type_type;
+        this.object_name = object_name;
         this.status = status;
         this.deleted = deleted;
     }
