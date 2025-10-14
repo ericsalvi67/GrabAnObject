@@ -1,5 +1,7 @@
 package controllers;
 
-public class MaintenenceController {
+import interfaces.IRegisterData;
+
+public class MaintenenceController implements IRegisterData{
 
 }

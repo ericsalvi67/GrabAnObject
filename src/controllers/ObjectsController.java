@@ -1,5 +1,7 @@
 package controllers;
 
-public class ObjectsController {
+import interfaces.IRegisterData;
+
+public class ObjectsController implements IRegisterData{
 
 }
