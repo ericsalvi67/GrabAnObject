@@ -1,4 +1,4 @@
-package aggregates.Maintenance;
+package Domain.Maintenance;
 
 import java.util.Date;
 

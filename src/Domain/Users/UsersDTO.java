@@ -1,4 +1,4 @@
-package aggregates.Users;
+package Domain.Users;
 
 import interfaces.ERDataResources;
 

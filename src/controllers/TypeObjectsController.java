@@ -1,7 +1,8 @@
 package controllers;
 
 import java.util.Scanner;
-import aggregates.TypeObjects.TypeObjectDTO;
+
+import Domain.TypeObjects.TypeObjectDTO;
 import interfaces.IRegisterData;
 
 public class TypeObjectsController implements IRegisterData{

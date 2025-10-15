@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.Scanner;
 
-import aggregates.Maintenance.MaintenanceDTO;
+import Domain.Maintenance.MaintenanceDTO;
 import interfaces.IRegisterData;
 
 public class MaintenenceController implements IRegisterData{

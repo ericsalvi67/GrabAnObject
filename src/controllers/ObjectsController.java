@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.Scanner;
 
-import aggregates.Objects.ObjectDTO;
+import Domain.Objects.ObjectDTO;
 import interfaces.IRegisterData;
 
 public class ObjectsController implements IRegisterData{
@@ -18,7 +18,7 @@ public class ObjectsController implements IRegisterData{
 		IO.print("Status: ");
 		dto.status = sc.nextLine();
 		IO.println("------- Object Registration -------");
-    
+
 		return dto;
 	}
 }

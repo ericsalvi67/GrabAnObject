@@ -2,7 +2,7 @@ package controllers;
 
 import java.util.Scanner;
 
-import aggregates.Users.UsersDTO;
+import Domain.Users.UsersDTO;
 import interfaces.IRegisterData;
 
 public class UsersController implements IRegisterData{

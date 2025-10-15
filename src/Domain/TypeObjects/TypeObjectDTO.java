@@ -1,4 +1,4 @@
-package aggregates.TypeObjects;
+package Domain.TypeObjects;
 
 import interfaces.ERDataResources;
 

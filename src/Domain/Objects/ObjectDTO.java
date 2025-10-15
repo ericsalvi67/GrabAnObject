@@ -1,4 +1,4 @@
-package aggregates.Objects;
+package Domain.Objects;
 
 import interfaces.ERDataResources;
 

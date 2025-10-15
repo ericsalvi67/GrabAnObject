@@ -1,4 +1,4 @@
-package aggregates.Objects;
+package Domain.Objects;
 
 import java.sql.*;
 import java.util.ArrayList;
