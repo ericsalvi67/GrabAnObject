@@ -1,24 +1,42 @@
 package controllers;
 
+import java.util.List;
 import java.util.Scanner;
 
-import Domain.Users.UsersDTO;
+import Domain.Users.*;
 import interfaces.IRegisterData;
 
 public class UsersController implements IRegisterData{
-
-  private static Scanner _sc = new Scanner(System.in);
-  
-  public UsersDTO registration() {
-    UsersDTO dto = new UsersDTO();
+    private static Scanner _sc = new Scanner(System.in);
     
-    IO.println("------- User Registration -------");
-    IO.print("Name: ");
-    dto.name = _sc.nextLine();
-    IO.print("Email: ");
-    dto.email = _sc.nextLine();
-    IO.println("------- User Registration -------");
+    public void registration() {
+      UsersDTO newDTO = dataEntry();
+      showDTO(newDTO);
+      try {
+        UsersQuery query = new UsersQuery();
+        List<UsersDTO> users = query.fetchAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    return dto;
-  } 
+    }
+
+    private UsersDTO dataEntry() {
+      UsersDTO dto = new UsersDTO();
+      IO.println("------- User Registration -------");
+      IO.print("Name: ");
+      dto.name = _sc.nextLine().trim().toUpperCase();
+      IO.print("Email: ");
+      dto.email = _sc.nextLine().trim().toLowerCase();
+      IO.println("---------------------------------");
+
+      return dto;
+    }
+
+    private void showDTO(UsersDTO dto) {
+      IO.println("======= User Data =======");
+      IO.println("Name: " + dto.name);
+      IO.println("Email: " + dto.email);
+      IO.println("========================");
+    }
 }

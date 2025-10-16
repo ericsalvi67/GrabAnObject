@@ -4,8 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import lib.ConnectionFactory;
-
 public class ObjectsQuery {
 	private final ConnectionFactory factory;
 
