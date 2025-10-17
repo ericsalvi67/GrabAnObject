@@ -10,10 +10,7 @@ public class TypeObjectDTO extends ERDataResources {
 
     public TypeObjectDTO() {}
 
-    public TypeObjectDTO(int id, 
-                         String type_name, 
-                         String description, 
-                         boolean deleted) {
+    public TypeObjectDTO(int id, String type_name, String description, boolean deleted) {
         this.id = id;
         this.type_name = type_name;
         this.description = description;

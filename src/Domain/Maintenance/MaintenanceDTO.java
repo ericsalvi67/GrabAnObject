@@ -16,15 +16,7 @@ public class MaintenanceDTO extends ERDataResources{
 
     public MaintenanceDTO() {}
 
-    public MaintenanceDTO(int id, 
-                          int user_id,
-                          int object_id, 
-                          String performed_by,
-                          String object_name,
-                          String service_type,
-                          String description,
-                          Date performed_at, 
-                          boolean deleted) {
+    public MaintenanceDTO(int id, int user_id, int object_id, String performed_by, String object_name, String service_type, String description, Date performed_at, boolean deleted) {
         this.id = id;
         this.user_id = user_id;
         this.object_id = object_id;

@@ -12,12 +12,7 @@ public class ObjectDTO extends ERDataResources {
 
     public ObjectDTO() {}
 
-    public ObjectDTO(int id,
-                     int type_id, 
-                     String type_name, 
-                     String object_name, 
-                     String status, 
-                     boolean deleted) {
+    public ObjectDTO(int id, int type_id, String type_name, String object_name, String status, boolean deleted) {
         this.id = id;
         this.type_id = type_id;
         this.type_name = type_name;

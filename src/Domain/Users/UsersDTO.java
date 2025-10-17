@@ -10,10 +10,7 @@ public class UsersDTO extends ERDataResources {
 
     public UsersDTO(){}
 
-    public UsersDTO(int id, 
-                    String name, 
-                    String email, 
-                    boolean deleted) {
+    public UsersDTO(int id, String name, String email, boolean deleted) {
         this.id = id;
         this.name = name;
         this.email = email;

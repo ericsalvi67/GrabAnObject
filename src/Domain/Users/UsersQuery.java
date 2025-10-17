@@ -4,28 +4,34 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import lib.JDBCConnection;
+import db.DataBaseConnectionManager;
+import db.DataBaseException;
 
 
-public class UsersQuery {
+
+public class UsersQuery{
    private static final String _sqlBase = "SELECT id, name, email FROM users ";
+   private static final String _sqlInsert = "INSERT INTO users (name, email) VALUES (?, ?) ";
+   private static final String _sqlUpdate = "UPDATE users SET name = ?, email = ? WHERE id = ? ";
+   private static final String _sqlDelete = "UPDATE users SET deleted = true WHERE id = ? ";
 
-      public List<UsersDTO> fetchAll() {
-         Connection conn = JDBCConnection.getConnection();
+      public List<UsersDTO> fetchAll() throws DataBaseException {
+         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "gaoDB", "postgres", "postgres");
          List<UsersDTO> list = new ArrayList<>();
          String sql = _sqlBase + "ORDER BY id";
 
-         try (PreparedStatement ps = conn.prepareStatement(sql);
-              ResultSet rs = ps.executeQuery()) {
-            while (rs.next()) {
-               UsersDTO dto = new UsersDTO();
-               dto.id = rs.getInt("id");
-               dto.name = rs.getString("name");
-               dto.email = rs.getString("email");
-               list.add(dto);
-            }
+      try (ResultSet result = conn.executeQuerySQL(sql)){
+         while (result.next()) {
+            UsersDTO user = new UsersDTO();
+            user.id = result.getInt("id");
+            user.name = result.getString("name");
+            user.email = result.getString("email");
+            list.add(user);
+         }
       } catch (SQLException e) {
-         throw new RuntimeException("Erro ao buscar usuários: " + e.getMessage(), e);
+         throw new RuntimeException("Erro ao listar usuários: " + e.getMessage(), e);
+      } catch (DataBaseException e) {
+         throw new RuntimeException("Erro ao connectar com o banco: " + e.getMessage(), e);
       }
       return list;
    }
