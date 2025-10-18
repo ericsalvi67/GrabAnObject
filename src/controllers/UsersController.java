@@ -14,10 +14,13 @@ public class UsersController implements IRegisterData{
       showDTO(newDTO);
       try {
         UsersQuery query = new UsersQuery();
-        List<UsersDTO> users = query.fetchAll();
-        } catch (Exception e) {
-            e.printStackTrace();
+        List<UsersDTO> users = query.select();
+        for (UsersDTO user : users) {
+          IO.println("Existing User - ID: " + user.id + ", Name: " + user.name + ", Email: " + user.email);
         }
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
 
     }
 
@@ -35,6 +38,7 @@ public class UsersController implements IRegisterData{
 
     private void showDTO(UsersDTO dto) {
       IO.println("======= User Data =======");
+      IO.println("ID: " + dto.id);
       IO.println("Name: " + dto.name);
       IO.println("Email: " + dto.email);
       IO.println("========================");
