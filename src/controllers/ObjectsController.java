@@ -3,9 +3,8 @@ package controllers;
 import java.util.Scanner;
 
 import Domain.Objects.ObjectDTO;
-import interfaces.IRegisterData;
 
-public class ObjectsController implements IRegisterData{
+public class ObjectsController {
 	private static final Scanner _sc = new Scanner(System.in);
 
 	public void registration() {

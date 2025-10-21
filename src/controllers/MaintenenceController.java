@@ -3,9 +3,8 @@ package controllers;
 import java.util.Scanner;
 
 import Domain.Maintenance.MaintenanceDTO;
-import interfaces.IRegisterData;
 
-public class MaintenenceController implements IRegisterData{
+public class MaintenenceController{
 	private static final Scanner _sc = new Scanner(System.in);
 
 	public void registration() {

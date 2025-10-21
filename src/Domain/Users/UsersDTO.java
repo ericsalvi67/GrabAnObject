@@ -1,5 +1,7 @@
 package Domain.Users;
 
+import java.sql.Date;
+
 import interfaces.ERDataResources;
 
 public class UsersDTO extends ERDataResources {
@@ -10,10 +12,11 @@ public class UsersDTO extends ERDataResources {
 
     public UsersDTO(){}
 
-    public UsersDTO(int id, String name, String email, boolean deleted) {
+    public UsersDTO(int id, String name, String email, boolean deleted, Date last_modification) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.deleted = deleted;
+        this.last_modification = last_modification;
     }
 }

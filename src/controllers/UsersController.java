@@ -1,39 +1,36 @@
 package controllers;
 
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.sql.Date;
 
-import Domain.Users.*;
-import interfaces.IRegisterData;
+import Domain.Users.UsersDTO;
+import handlers.UsersHandler;
 
-public class UsersController implements IRegisterData{
+
+public class UsersController{
     private static Scanner _sc = new Scanner(System.in);
+    private static UsersHandler _handler = new UsersHandler();
     
     public void registration() {
       UsersDTO newDTO = dataEntry();
-      showDTO(newDTO);
-      try {
-        UsersQuery query = new UsersQuery();
-        List<UsersDTO> users = query.select();
-        for (UsersDTO user : users) {
-          IO.println("Existing User - ID: " + user.id + ", Name: " + user.name + ", Email: " + user.email);
-        }
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
 
+      try {
+        _handler.Insert(newDTO);
+      } catch (Exception e) {
+          IO.println("Erro ao cadastrar usuário: " + e.getMessage());
+      }
     }
 
     private UsersDTO dataEntry() {
       UsersDTO dto = new UsersDTO();
       IO.println("------- User Registration -------");
-      IO.print("Name: ");
+      IO.print("| Name: ");
       dto.name = _sc.nextLine().trim().toUpperCase();
-      IO.print("Email: ");
+      IO.print("| Email: ");
       dto.email = _sc.nextLine().trim().toLowerCase();
       IO.println("---------------------------------");
 
-      return dto;
+      return new UsersDTO(0, dto.name, dto.email, false, new Date(System.currentTimeMillis()));
     }
 
     private void showDTO(UsersDTO dto) {
