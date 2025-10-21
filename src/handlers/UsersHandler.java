@@ -9,8 +9,8 @@ public class UsersHandler {
     public void Insert(UsersDTO newDTO) throws Exception {
         if (newDTO.name.isBlank())
             throw new IllegalArgumentException("Name cannot be blank");
-        if (newDTO.email.isBlank()) 
-            throw new IllegalArgumentException("Email cannot be blank");
+        if (newDTO.email.isBlank() || !newDTO.email.contains("@")) 
+            throw new IllegalArgumentException("Email is invalid");
             
         _query.Insert(newDTO);
     }

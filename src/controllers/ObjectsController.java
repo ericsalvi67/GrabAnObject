@@ -2,19 +2,19 @@ package controllers;
 
 import java.util.Scanner;
 
-import Domain.Objects.ObjectDTO;
+import Domain.Objects.ObjectsDTO;
 
 public class ObjectsController {
 	private static final Scanner _sc = new Scanner(System.in);
 
 	public void registration() {
-		ObjectDTO newDTO = dataEntry();
+		ObjectsDTO newDTO = dataEntry();
 		showDTO(newDTO);
 
 	}
 
-	private ObjectDTO dataEntry() {
-		ObjectDTO dto = new ObjectDTO();
+	private ObjectsDTO dataEntry() {
+		ObjectsDTO dto = new ObjectsDTO();
 		IO.println("------- Object Registration -------");
 		IO.print("Type name: ");
 		dto.type_name = _sc.nextLine().trim().toUpperCase();
@@ -27,7 +27,7 @@ public class ObjectsController {
 		return dto;
 	}
 
-	private void showDTO(ObjectDTO dto) {
+	private void showDTO(ObjectsDTO dto) {
 		IO.println("======= Object Data =======");
 		IO.println("Type name: " + dto.type_name);
 		IO.println("Object name: " + dto.object_name);

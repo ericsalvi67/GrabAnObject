@@ -2,7 +2,7 @@ package Domain.Objects;
 
 import interfaces.ERDataResources;
 
-public class ObjectDTO extends ERDataResources {
+public class ObjectsDTO extends ERDataResources {
 
     public int id;
     public int type_id;
@@ -10,9 +10,9 @@ public class ObjectDTO extends ERDataResources {
     public String object_name;
     public String status;
 
-    public ObjectDTO() {}
+    public ObjectsDTO() {}
 
-    public ObjectDTO(int id, int type_id, String type_name, String object_name, String status, boolean deleted) {
+    public ObjectsDTO(int id, int type_id, String type_name, String object_name, String status, boolean deleted) {
         this.id = id;
         this.type_id = type_id;
         this.type_name = type_name;
