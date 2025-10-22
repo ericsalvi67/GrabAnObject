@@ -8,7 +8,7 @@ public class TypeObjectsQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         String sql = "INSERT INTO type_objects (type_name, description, deleted, last_modification) " +
-                    "VALUES ('" + typeObject.type_name + "','" + typeObject.description + "', " + typeObject.deleted + ", '" + typeObject.last_modification + "')";
+                    "VALUES ('" + typeObject.type_name + "','" + typeObject.description + "', " + typeObject.deleted + ", now())";
 
 		try{
 			conn.connectDataBase();

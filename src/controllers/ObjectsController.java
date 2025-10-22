@@ -3,13 +3,21 @@ package controllers;
 import java.util.Scanner;
 
 import Domain.Objects.ObjectsDTO;
+import handlers.ObjectsHandler;
 
 public class ObjectsController {
 	private static final Scanner _sc = new Scanner(System.in);
+	private static final ObjectsHandler _handler = new ObjectsHandler();
 
 	public void registration() {
 		ObjectsDTO newDTO = dataEntry();
 		showDTO(newDTO);
+
+		try {
+        _handler.Insert(newDTO);
+      } catch (Exception e) {
+          IO.println("Erro ao cadastrar objeto: " + e.getMessage());
+      }
 
 	}
 
@@ -18,9 +26,10 @@ public class ObjectsController {
 		IO.println("------- Object Registration -------");
 		IO.print("Type ID: ");
 		dto.type_id = _sc.nextInt();
+		_sc.nextLine();
 		IO.print("Object name: ");
 		dto.object_name = _sc.nextLine().trim().toUpperCase();
-		IO.print("Status (A-Active, M-Maintenance, B-Broken): ");
+		IO.print("Status (A-Active, M-Maintenance, B-Broken, L-Lent): ");
 		dto.status = _sc.nextLine().trim().toUpperCase();
 		IO.println("-----------------------------------");
 

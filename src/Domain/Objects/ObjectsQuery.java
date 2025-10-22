@@ -13,7 +13,7 @@ public class ObjectsQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         String sql = "INSERT INTO objects (type_id, object_name, status, deleted, last_modification) " +
-                    "VALUES ('" + object.type_id + "', '" + object.object_name + "', '" + object.status + "', " + object.deleted + ", '" + object.last_modification + "')";
+                    "VALUES ('" + object.type_id + "', '" + object.object_name + "', '" + object.status + "', " + object.deleted + ", now())";
 
 		try{
 			conn.connectDataBase();

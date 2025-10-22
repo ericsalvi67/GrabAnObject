@@ -11,7 +11,7 @@ public class ObjectsHandler {
            throw new IllegalArgumentException("Type ID cannot be blank");
        if (newDTO.object_name.isBlank())
            throw new IllegalArgumentException("Object Name cannot be blank");
-       if (!newDTO.status.contains("A") && !newDTO.status.contains("M") && !newDTO.status.contains("R"))
+       if (!newDTO.status.contains("A") && !newDTO.status.contains("M") && !newDTO.status.contains("R") && !newDTO.status.contains("L"))
            throw new IllegalArgumentException("Status is invalid");
 
        _query.Insert(newDTO);

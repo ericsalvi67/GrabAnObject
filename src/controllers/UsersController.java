@@ -13,6 +13,7 @@ public class UsersController{
     
     public void registration() {
       UsersDTO newDTO = dataEntry();
+      showDTO(newDTO);
 
       try {
         _handler.Insert(newDTO);

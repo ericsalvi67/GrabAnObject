@@ -3,13 +3,21 @@ package controllers;
 import java.util.Scanner;
 
 import Domain.TypeObjects.TypeObjectsDTO;
+import handlers.TypeObjectsHandler;
 
 public class TypeObjectsController{
     private static Scanner _sc = new Scanner(System.in);
-  
+    private static final TypeObjectsHandler _handler = new TypeObjectsHandler();
+
     public void registration() {
         TypeObjectsDTO newDTO = dataEntry();
         showDTO(newDTO);
+
+        try {
+        _handler.Insert(newDTO);
+      } catch (Exception e) {
+          IO.println("Erro ao cadastrar tipo de objeto: " + e.getMessage());
+      }
 
     }
 

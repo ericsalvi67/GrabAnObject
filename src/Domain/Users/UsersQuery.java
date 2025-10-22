@@ -15,7 +15,7 @@ public class UsersQuery{
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sql = "INSERT INTO users (name, email, deleted, last_modification) " +
-					"VALUES ('" + user.name + "','" + user.email + "', " + user.deleted + ", '" + user.last_modification + "')";
+					"VALUES ('" + user.name + "','" + user.email + "', " + user.deleted + ", now())";
 
 		try{
 			conn.connectDataBase();
