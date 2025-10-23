@@ -28,7 +28,7 @@ CREATE TABLE objects (
 	CONSTRAINT type_objects_fk FOREIGN KEY (type_id) REFERENCES type_objects(id)
 );
 
-CREATE TABLE maintenence (
+CREATE TABLE maintenance (
 	id serial NOT NULL,
     user_id int4 NOT NULL,
     object_id int4 NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE maintenence (
     performed_at timestamp NOT NULL,
     deleted boolean NOT NULL,
     last_modification timestamp NOT NULL,
-	CONSTRAINT maintenence_pk PRIMARY KEY (id),
+	CONSTRAINT maintenance_pk PRIMARY KEY (id),
 	CONSTRAINT objects_fk FOREIGN KEY (object_id) REFERENCES objects(id),
 	CONSTRAINT users_fk FOREIGN KEY (user_id) REFERENCES users(id)
 );
