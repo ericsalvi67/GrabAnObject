@@ -8,23 +8,16 @@ import db.DataBaseConnectionManager;
 import db.DataBaseException;
 
 public class UsersQuery{
-    private static final String _sqlUpdate = "UPDATE users SET name = ?, email = ? WHERE id = ? ";
-    private static final String _sqlDelete = "UPDATE users SET deleted = true WHERE id = ? ";
 
 	public void Insert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-		String sql = "INSERT INTO users (name, email, deleted, last_modification) " +
-					"VALUES ('" + user.name + "','" + user.email + "', " + user.deleted + ", now())";
-
-		try{
-			conn.connectDataBase();
-		} catch (DataBaseException e) {
-			throw new RuntimeException("Erro ao conectar com o banco: " + e.getMessage(), e);
-		}
+		String sql = "INSERT INTO users (name, email) " +
+					"VALUES ('" + user.name + "','" + user.email + "')";
 
 		try {
 			conn.runSQL(sql);
+            IO.println("Usuário inserido com sucesso!");
 		} catch (DataBaseException e) {
 			throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
 		} finally {

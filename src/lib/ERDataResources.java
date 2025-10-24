@@ -1,4 +1,4 @@
-package interfaces;
+package lib;
 
 import java.util.Date;
 

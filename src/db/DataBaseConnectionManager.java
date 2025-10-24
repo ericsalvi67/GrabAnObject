@@ -10,11 +10,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import lib.LoggerResources;
+
 
 public class DataBaseConnectionManager {
     public final static int MYSQL = 0;
     public final static int POSTGRESQL = 1;
     public final static int SQLITE = 2;
+
+    private LoggerResources _logger = new LoggerResources();
 
     private Connection connection;
     private ResultSet rs;
@@ -75,6 +79,7 @@ public class DataBaseConnectionManager {
                 this.connection = c;
             }
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "connectDataBase", ex.getMessage());
             throw new DataBaseException("A conexão com o banco de dados falhou");
         }
     }
@@ -91,8 +96,10 @@ public class DataBaseConnectionManager {
             this.connection.close();
             this.connection = null;
         } catch (DataBaseException ex) {
+            _logger.error("DataBaseConnectionManager", "connectionTest", ex.getMessage());
             throw new DataBaseException("O teste de conexão com o banco de dados falhou");
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "connectionTest", ex.getMessage());
             throw new DataBaseException("O teste de conexão com o banco de dados falhou");
         }
     }
@@ -104,6 +111,7 @@ public class DataBaseConnectionManager {
             }
             executeSQL(sql);
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "runSQL", ex.getMessage());
             throw new DataBaseException("Erro na execução de uma instrução SQL");
         }
     }
@@ -114,8 +122,10 @@ public class DataBaseConnectionManager {
                 this.connectDataBase();
             }
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "getConnection", ex.getMessage());
             throw new DataBaseException(ex.getMessage());
         } catch (DataBaseException ex) {
+            _logger.error("DataBaseConnectionManager", "getConnection", ex.getMessage());
             throw new DataBaseException(ex.getMessage());
         }
         return connection;
@@ -128,6 +138,7 @@ public class DataBaseConnectionManager {
             }
             this.rs = executeQuerySQL(sql);
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "runQuerySQL", ex.getMessage());
             throw new DataBaseException("Erro em runQuerySQL");
         }
         return rs;
@@ -142,8 +153,10 @@ public class DataBaseConnectionManager {
             this.rs = rs;
         } catch (NullPointerException ex) // se a variável connection estiver null
         {
+            _logger.error("DataBaseConnectionManager", "executeQuerySQL", ex.getMessage());
             throw new DataBaseException("Falha na execução da consulta SQL 1");
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "executeQuerySQL", ex.getMessage());
             throw new DataBaseException("Falha na execução da consulta SQL 2");
         }
         return rs;
@@ -158,8 +171,10 @@ public class DataBaseConnectionManager {
             connection.close();
         } catch (NullPointerException ex) // se a variável connection estiver null
         {
+            _logger.error("DataBaseConnectionManager", "closeConnection", ex.getMessage());
             throw new DataBaseException("Ocorreu um erro ao fechar a conexão com o banco");
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "closeConnection", ex.getMessage());
             throw new DataBaseException("Ocorreu um erro ao fechar a conexão com o banco");
         }
     }
@@ -171,8 +186,10 @@ public class DataBaseConnectionManager {
             stm.executeUpdate(sql);
         } catch (NullPointerException ex) // se a variável connection estiver null
         {
+            _logger.error("DataBaseConnectionManager", "executeSQL", ex.getMessage());
             throw new DataBaseException("Falha na execução da instrução SQL (NullPointer)");
         } catch (SQLException ex) {
+            _logger.error("DataBaseConnectionManager", "executeSQL", ex.getMessage());
             throw new DataBaseException("Falha na execução da instrução SQL");
         }
     }

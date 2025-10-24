@@ -2,7 +2,7 @@ package Domain.Users;
 
 import java.sql.Date;
 
-import interfaces.ERDataResources;
+import lib.ERDataResources;
 
 public class UsersDTO extends ERDataResources {
 

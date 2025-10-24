@@ -2,7 +2,7 @@ package Domain.Maintenance;
 
 import java.util.Date;
 
-import interfaces.ERDataResources;
+import lib.ERDataResources;
 public class MaintenanceDTO extends ERDataResources{
 
     public int id;

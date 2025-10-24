@@ -1,6 +1,6 @@
 package Domain.TypeObjects;
 
-import interfaces.ERDataResources;
+import lib.ERDataResources;
 
 public class TypeObjectsDTO extends ERDataResources {
 

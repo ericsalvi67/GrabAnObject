@@ -8,17 +8,12 @@ public class MaintenanceQuery {
    public void Insert(MaintenanceDTO maintenance) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-        String sql = "INSERT INTO maintenance (id, user_id, object_id, service_type, description, performed_at, deleted, last_modification) " +
-                    "VALUES (" + maintenance.id + ", " + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now(), " + maintenance.deleted + ", now())";
-
-		try{
-			conn.connectDataBase();
-		} catch (DataBaseException e) {
-			throw new RuntimeException("Erro ao conectar com o banco: " + e.getMessage(), e);
-		}
+        String sql = "INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
+                    " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now())";
 
         try {
             conn.runSQL(sql);
+            IO.println("Manutenção inserida com sucesso!");
         } catch (DataBaseException e) {
             throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
         } finally {
