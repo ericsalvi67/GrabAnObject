@@ -1,5 +1,9 @@
 package Domain.TypeObjects;
 
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import db.DataBaseConnectionManager;
 import db.DataBaseException;
 
@@ -18,6 +22,44 @@ public class TypeObjectsQuery {
             throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
         } finally {
             conn.closeConnection();
+        }
+    }
+
+    public List<TypeObjectsDTO> Select(String type, String value) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+        List<TypeObjectsDTO> list = new ArrayList<>();
+        String sql = "SELECT id, type_name, description FROM type_objects WHERE not deleted " + GetType(type, value) + " ORDER BY id";
+
+        try {
+            ResultSet result = conn.runQuerySQL(sql);
+            while (result.next()) {
+                TypeObjectsDTO typeObject = new TypeObjectsDTO();
+                typeObject.id = result.getInt("id");
+                typeObject.type_name = result.getString("type_name");
+                typeObject.description = result.getString("description");
+                list.add(typeObject);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar tipos de objetos: " + e.getMessage(), e);
+        } catch (DataBaseException e) {
+            throw new RuntimeException("Erro ao conectar com o banco: " + e.getMessage(), e);
+        } finally {
+            conn.closeConnection();
+        }
+        return list;
+    }
+
+    private String GetType(String type, String value) {
+        switch (type.toLowerCase()) {
+            case "id":
+                return " and id = " + value;
+            case "type_name":
+                return " and type_name LIKE '%" + value + "%'";
+            case "description":
+                return " and description LIKE '%" + value + "%'";
+            default:
+                return " and 1=1 ";
         }
     }
 }

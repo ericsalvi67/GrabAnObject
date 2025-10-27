@@ -29,16 +29,10 @@ public class UsersQuery{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<UsersDTO> list = new ArrayList<>();
-        String sql = "SELECT id, name, email FROM users WHERE not deleted and"+ GetType(type,value) +" ORDER BY id";
-
-		try{
-			conn.connectDataBase();
-		} catch (DataBaseException e) {
-			throw new RuntimeException("Erro ao conectar com o banco: " + e.getMessage(), e);
-		}
+        String sql = "SELECT id, name, email FROM users WHERE not deleted " + GetType(type, value) + " ORDER BY id";
 
         try {
-            ResultSet result = conn.runQuerySQL(sql); // garante abrir conexão antes da consulta
+            ResultSet result = conn.runQuerySQL(sql);
             while (result.next()) {
                 UsersDTO user = new UsersDTO();
                 user.id = result.getInt("id");
@@ -59,13 +53,13 @@ public class UsersQuery{
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "id":
-                return "id = " + value;
+                return " id = " + value;
             case "name":
-                return "name LIKE '%" + value + "%'";
+                return " and name LIKE '%" + value + "%'";
             case "email":
-                return "email LIKE '%" + value + "%'";
+                return " and email LIKE '%" + value + "%'";
             default:
-                return "1=0";
+                return " and 1=1 ";
         }
     }
 

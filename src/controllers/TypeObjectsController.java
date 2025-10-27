@@ -1,6 +1,6 @@
 package controllers;
 
-import java.util.Scanner;
+import java.util.*;
 
 import Domain.TypeObjects.TypeObjectsDTO;
 import handlers.TypeObjectsHandler;
@@ -11,7 +11,7 @@ public class TypeObjectsController{
 
     public void registration() {
         TypeObjectsDTO newDTO = dataEntry();
-        showDTO(newDTO);
+        newDTO.showDTO();
 
         try {
         _handler.Insert(newDTO);
@@ -23,21 +23,61 @@ public class TypeObjectsController{
 
     private TypeObjectsDTO dataEntry() {
         TypeObjectsDTO dto = new TypeObjectsDTO();
-        IO.println("------- Type Registration -------");
-        IO.print("Type name: ");
+        IO.println("------- Cadastro de Tipo -------");
+        IO.print("Nome do tipo: ");
         dto.type_name = _sc.nextLine().trim().toUpperCase();
-        IO.print("Description: ");
+        IO.print("Descrição: ");
         dto.description = _sc.nextLine().trim().toUpperCase();
-        IO.println("---------------------------------");
+        IO.println("--------------------------------");
 
         return dto;
     }
 
-    private void showDTO(TypeObjectsDTO dto) {
-        IO.println("======= Type Object Data =======");
-        IO.println("Type name: " + dto.type_name);
-        IO.println("Description: " + dto.description);
-        IO.println("================================");
+
+
+    public void search() {
+        String value = "";
+        String type = "";
+
+        IO.println("------- Busca de Tipo de Objeto -------");
+        IO.println("Selecione o campo de busca:");
+		IO.println("1. ID");
+		IO.println("2. Nome do Tipo");
+		IO.println("3. Descrição");
+		IO.print("Opção: ");
+        String option = _sc.nextLine().trim();
+        if (option.equals("1") || option.equals("2") || option.equals("3")) {
+            IO.print("Digite o valor da busca: ");
+            value = _sc.nextLine().trim().toUpperCase();
+        }
+        IO.println("------- Busca de Tipo de Objeto -------");
+
+        
+        switch (option) {
+            case "1":
+                type = "id";
+                break;
+            case "2":
+                type = "type_name";
+                break;
+            case "3":
+                type = "description";
+                break;
+            default:
+                break;
+        }
+
+        try {
+            List<TypeObjectsDTO> results = _handler.Search(type, value);
+            IO.println("======= Resultados da Busca =======");
+            IO.println(" ID |  Nome do Tipo  | Descrição");
+            for (TypeObjectsDTO typeObject : results) {
+                IO.println(String.format("%3s | %14s | %25s", typeObject.id, typeObject.type_name, typeObject.description));
+            }
+            IO.println("===================================");
+        } catch (Exception e) {
+            IO.println("Erro durante a busca: " + e.getMessage());
+        }
     }
   
 }

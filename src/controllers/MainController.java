@@ -28,6 +28,9 @@ public class MainController {
                 case "1":
                     incluirMenu(sc);
                     break;
+                case "2":
+                    consultarMenu(sc);
+                    break;
                 case "0":
                     exit = true;
                     break;
@@ -63,7 +66,43 @@ public class MainController {
                     new ObjectsController().registration();
                     break;
                 case "4":
-                    new MaintenenceController().registration();
+                    new MaintenanceController().registration();
+                    break;
+                case "0":
+                    back = true;
+                    break;
+                default:
+                    IO.println("Opção inválida.");
+            }
+            IO.println("");
+        }
+    }
+
+    private void consultarMenu(Scanner sc) {
+        boolean back = false;
+        while (!back) {
+            IO.println("Consultar");
+            IO.println("");
+            IO.println("1. Pessoas");
+            IO.println("2. Tipos de objetos");
+            IO.println("3. Objetos");
+            IO.println("4. Manutenção");
+            IO.println("0. Sair");
+            IO.print("\nEscolha a sua opção: ");
+
+            String opt = sc.nextLine();
+            switch (opt) {
+                case "1":
+                    new UsersController().search();
+                    break;
+                case "2":
+                    new TypeObjectsController().search();
+                    break;
+                case "3":
+                    new ObjectsController().search();
+                    break;
+                case "4":
+                    new MaintenanceController().search();
                     break;
                 case "0":
                     back = true;

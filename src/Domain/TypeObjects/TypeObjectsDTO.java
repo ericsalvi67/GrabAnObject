@@ -10,11 +10,18 @@ public class TypeObjectsDTO extends ERDataResources {
 
     public TypeObjectsDTO() {}
 
-    public TypeObjectsDTO(int id, String type_name, String description, boolean deleted) {
+    public TypeObjectsDTO(int id, String type_name, String description) {
         this.id = id;
         this.type_name = type_name;
         this.description = description;
-        this.deleted = deleted;
+    }
+
+    public void showDTO() {
+        IO.println("======= Dados do Tipo de Objeto =======");
+        IO.println("ID: " + this.id);
+        IO.println("Nome do tipo: " + this.type_name);
+        IO.println("Descrição: " + this.description);
+        IO.println("========================================");
     }
 
 }
