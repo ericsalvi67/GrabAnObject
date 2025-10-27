@@ -9,19 +9,8 @@ public class MaintenanceController{
 	private static final Scanner _sc = new Scanner(System.in);
 	private static final MaintenanceHandler _handler = new MaintenanceHandler();
 
-	public void registration() {
-		MaintenanceDTO newDTO = dataEntry();
-		newDTO.showDTO();
-
-		try {
-        _handler.Insert(newDTO);
-      } catch (Exception e) {
-          IO.println("Erro ao cadastrar manutenção: " + e.getMessage());
-      }
-	}
-
-	private MaintenanceDTO dataEntry() {
-		MaintenanceDTO dto = new MaintenanceDTO();
+	public void register() {
+        MaintenanceDTO dto = new MaintenanceDTO();
 		IO.println("------- Cadastro de Manutenção -------");
 		IO.print("Realizada por (ID do Usuário): ");
 		dto.user_id = _sc.nextInt();
@@ -34,8 +23,13 @@ public class MaintenanceController{
 		IO.print("Descrição: ");
 		dto.description = _sc.nextLine().trim().toUpperCase();
 		IO.println("--------------------------------------");
-		
-		return dto;
+		dto.showDTO();
+
+		try {
+			_handler.Insert(dto);
+		} catch (Exception e) {
+			IO.println("Erro ao cadastrar manutenção: " + e.getMessage());
+      }
 	}
 
 	public void search() {
@@ -57,29 +51,8 @@ public class MaintenanceController{
 		}
 		IO.println("------- Busca de Manutenção -------");
 
-
-		switch(option) {
-			case "1":
-				type = "id";
-				break;
-			case "2":
-				type = "user_id";
-				break;
-			case "3":
-				type = "object_id";
-				break;
-			case "4":
-				type = "service_type";
-				break;
-			case "5":
-				type = "description";
-				break;
-            default:
-                break;
-        }
-
 		try {
-            List<MaintenanceDTO> results = _handler.Search(type, value);
+            List<MaintenanceDTO> results = _handler.Select(type, value);
             IO.println("======= Resultados da Busca =======");
             IO.println(" ID | ID do Usuário | ID do Objeto | Tipo de Serviço | Descrição");
             for (MaintenanceDTO maintenance : results) {

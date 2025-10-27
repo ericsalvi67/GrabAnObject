@@ -8,7 +8,6 @@ import db.DataBaseConnectionManager;
 import db.DataBaseException;
 
 public class UsersQuery{
-
 	public void Insert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
@@ -52,11 +51,11 @@ public class UsersQuery{
 
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
-            case "id":
+            case "1": // ID
                 return " id = " + value;
-            case "name":
+            case "2": // Nome
                 return " and name LIKE '%" + value + "%'";
-            case "email":
+            case "3": // Email
                 return " and email LIKE '%" + value + "%'";
             default:
                 return " and 1=1 ";

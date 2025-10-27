@@ -55,15 +55,15 @@ public class MaintenanceQuery {
 
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
-            case "id":
+            case "1": // ID
                 return " and id = " + value;
-            case "user_id":
+            case "2": // ID do Usuário
                 return " and user_id = " + value;
-            case "object_id":
+            case "3": // ID do Objeto
                 return " and object_id = " + value;
-            case "service_type":
+            case "4": // Tipo de Serviço
                 return " and service_type LIKE '%" + value + "%'";
-            case "description":
+            case "5": // Descrição
                 return " and description LIKE '%" + value + "%'";
             default:
                 return " and 1=1 ";

@@ -57,16 +57,16 @@ public class MainController {
             String opt = sc.nextLine();
             switch (opt) {
                 case "1":
-                    new UsersController().registration();
+                    new UsersController().register();
                     break;
                 case "2":
-                    new TypeObjectsController().registration();
+                    new TypeObjectsController().register();
                     break;
                 case "3":
-                    new ObjectsController().registration();
+                    new ObjectsController().register();
                     break;
                 case "4":
-                    new MaintenanceController().registration();
+                    new MaintenanceController().register();
                     break;
                 case "0":
                     back = true;

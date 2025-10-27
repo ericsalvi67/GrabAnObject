@@ -9,19 +9,7 @@ public class TypeObjectsController{
     private static Scanner _sc = new Scanner(System.in);
     private static final TypeObjectsHandler _handler = new TypeObjectsHandler();
 
-    public void registration() {
-        TypeObjectsDTO newDTO = dataEntry();
-        newDTO.showDTO();
-
-        try {
-        _handler.Insert(newDTO);
-      } catch (Exception e) {
-          IO.println("Erro ao cadastrar tipo de objeto: " + e.getMessage());
-      }
-
-    }
-
-    private TypeObjectsDTO dataEntry() {
+    public void register() {
         TypeObjectsDTO dto = new TypeObjectsDTO();
         IO.println("------- Cadastro de Tipo -------");
         IO.print("Nome do tipo: ");
@@ -29,11 +17,14 @@ public class TypeObjectsController{
         IO.print("Descrição: ");
         dto.description = _sc.nextLine().trim().toUpperCase();
         IO.println("--------------------------------");
+        dto.showDTO();
 
-        return dto;
+        try {
+            _handler.Insert(dto);
+        } catch (Exception e) {
+          IO.println("Erro ao cadastrar tipo de objeto: " + e.getMessage());
+        }
     }
-
-
 
     public void search() {
         String value = "";
@@ -52,23 +43,8 @@ public class TypeObjectsController{
         }
         IO.println("------- Busca de Tipo de Objeto -------");
 
-        
-        switch (option) {
-            case "1":
-                type = "id";
-                break;
-            case "2":
-                type = "type_name";
-                break;
-            case "3":
-                type = "description";
-                break;
-            default:
-                break;
-        }
-
         try {
-            List<TypeObjectsDTO> results = _handler.Search(type, value);
+            List<TypeObjectsDTO> results = _handler.Select(type, value);
             IO.println("======= Resultados da Busca =======");
             IO.println(" ID |  Nome do Tipo  | Descrição");
             for (TypeObjectsDTO typeObject : results) {

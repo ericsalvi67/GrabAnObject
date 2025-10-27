@@ -10,27 +10,21 @@ public class UsersController{
     private static Scanner _sc = new Scanner(System.in);
     private static UsersHandler _handler = new UsersHandler();
     
-    public void registration() {
-      UsersDTO newDTO = dataEntry();
-      newDTO.showDTO();
+    public void register() {
+        UsersDTO dto = new UsersDTO();
+        IO.println("------- Cadastro de Usuário -------");
+        IO.print("Nome: ");
+        dto.name = _sc.nextLine().trim().toUpperCase();
+        IO.print("Email: ");
+        dto.email = _sc.nextLine().trim().toUpperCase();
+        IO.println("-----------------------------------");
+        dto.showDTO();
 
-      try {
-        _handler.Insert(newDTO);
-      } catch (Exception e) {
-          IO.println("Erro ao cadastrar usuário: " + e.getMessage());
+        try {
+            _handler.Insert(dto);
+        } catch (Exception e) {
+            IO.println("Erro ao cadastrar usuário: " + e.getMessage());
       }
-    }
-
-    private UsersDTO dataEntry() {
-      UsersDTO dto = new UsersDTO();
-      IO.println("------- Cadastro de Usuário -------");
-      IO.print("Nome: ");
-      dto.name = _sc.nextLine().trim().toUpperCase();
-      IO.print("Email: ");
-      dto.email = _sc.nextLine().trim().toUpperCase();
-      IO.println("-----------------------------------");
-
-      return dto;
     }
 
     public void search() {
@@ -50,22 +44,8 @@ public class UsersController{
         }
         IO.println("------- Busca de Usuário -------");
 
-        switch (option) {
-            case "1":
-                type = "id";
-                break;
-            case "2":
-                type = "name";
-                break;
-            case "3":
-                type = "email";
-                break;
-            default:
-                break;
-        }
-
         try {
-            List<UsersDTO> results = _handler.Search(type, value);
+            List<UsersDTO> results = _handler.Select(type, value);
             IO.println("======= Resultados da Busca =======");
             IO.println(" ID |     Nome      |   Email");
             for (UsersDTO user : results) {

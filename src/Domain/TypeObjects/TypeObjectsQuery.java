@@ -52,11 +52,11 @@ public class TypeObjectsQuery {
 
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
-            case "id":
+            case "1": // ID
                 return " and id = " + value;
-            case "type_name":
+            case "2": // Nome do Tipo
                 return " and type_name LIKE '%" + value + "%'";
-            case "description":
+            case "3": // Descrição
                 return " and description LIKE '%" + value + "%'";
             default:
                 return " and 1=1 ";

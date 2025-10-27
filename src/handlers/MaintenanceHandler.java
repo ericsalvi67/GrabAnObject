@@ -23,7 +23,7 @@ public class MaintenanceHandler {
         _query.Insert(newDTO);
     }
 
-    public List<MaintenanceDTO> Search(String type, String value) throws DataBaseException {
+    public List<MaintenanceDTO> Select(String type, String value) throws DataBaseException {
         if (type == null || value == null) {
             throw new IllegalArgumentException("Tipo e valor não podem ser nulos");
         }

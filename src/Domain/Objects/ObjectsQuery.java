@@ -53,13 +53,13 @@ public class ObjectsQuery {
 
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
-            case "id":
+            case "1": // ID
                 return " and id = " + value;
-            case "type_id":
+            case "2": // ID do Tipo
                 return " and type_id = " + value;
-            case "object_name":
+            case "3": // Nome do Objeto
                 return " and object_name LIKE '%" + value + "%'";
-            case "status":
+            case "4": // Status
                 return " and status LIKE '%" + value + "%'";
             default:
                 return " and 1=1 ";
