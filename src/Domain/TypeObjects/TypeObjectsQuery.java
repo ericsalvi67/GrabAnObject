@@ -12,11 +12,11 @@ public class TypeObjectsQuery {
    public void Insert(TypeObjectsDTO typeObject) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-        String sql = "INSERT INTO type_objects (type_name, description) " +
+        String sqlBase = "INSERT INTO type_objects (type_name, description) " +
                     "VALUES ('" + typeObject.type_name + "','" + typeObject.description + "')";
 
         try {
-            conn.runSQL(sql);
+            conn.runSQL(sqlBase);
             IO.println("Tipo de objeto inserido com sucesso!");
         } catch (DataBaseException e) {
             throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
@@ -29,10 +29,10 @@ public class TypeObjectsQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<TypeObjectsDTO> list = new ArrayList<>();
-        String sql = "SELECT id, type_name, description FROM type_objects WHERE not deleted " + GetType(type, value) + " ORDER BY id";
+        String sqlBase = "SELECT id, type_name, description FROM type_objects WHERE not deleted " + GetType(type, value) + " ORDER BY id";
 
         try {
-            ResultSet result = conn.runQuerySQL(sql);
+            ResultSet result = conn.runQuerySQL(sqlBase);
             while (result.next()) {
                 TypeObjectsDTO typeObject = new TypeObjectsDTO();
                 typeObject.id = result.getInt("id");

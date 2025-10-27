@@ -8,17 +8,15 @@ import db.DataBaseConnectionManager;
 import db.DataBaseException;
 
 public class UsersQuery{
-    private final String _Upsert = " ON CONFLICT (email) DO UPDATE ";
 
 	public void Insert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sqlBase = " INSERT INTO users (name, email) " +
 					"VALUES ('" + user.name + "','" + user.email + "') ";
-        String Update = " SET name = '" + user.name + "', email = '" + user.email + "', deleted = false, last_modification = now() ";
 
 		try {
-			conn.runSQL(sqlBase + _Upsert + Update);
+			conn.runSQL(sqlBase);
             IO.println("Usuário inserido com sucesso!");
 		} catch (DataBaseException e) {
 			throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
@@ -31,10 +29,10 @@ public class UsersQuery{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<UsersDTO> list = new ArrayList<>();
-        String sql = "SELECT id, name, email FROM users WHERE not deleted " + GetType(type, value) + " ORDER BY id";
+        String sqlBase = "SELECT id, name, email FROM users WHERE not deleted " + GetType(type, value) + " ORDER BY id";
 
         try {
-            ResultSet result = conn.runQuerySQL(sql);
+            ResultSet result = conn.runQuerySQL(sqlBase);
             while (result.next()) {
                 UsersDTO user = new UsersDTO();
                 user.id = result.getInt("id");

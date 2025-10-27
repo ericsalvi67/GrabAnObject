@@ -12,11 +12,11 @@ public class MaintenanceQuery {
    public void Insert(MaintenanceDTO maintenance) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-        String sql = "INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
+        String sqlBase = "INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
                     " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now())";
 
         try {
-            conn.runSQL(sql);
+            conn.runSQL(sqlBase);
             IO.println("Manutenção inserida com sucesso!");
         } catch (DataBaseException e) {
             throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
@@ -29,10 +29,10 @@ public class MaintenanceQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<MaintenanceDTO> list = new ArrayList<>();
-        String sql = "SELECT id, user_id, object_id, service_type, description, performed_at FROM maintenance WHERE not deleted " + GetType(type, value) + " ORDER BY id";
+        String sqlBase = "SELECT id, user_id, object_id, service_type, description, performed_at FROM maintenance WHERE not deleted " + GetType(type, value) + " ORDER BY id";
 
         try {
-            ResultSet result = conn.runQuerySQL(sql);
+            ResultSet result = conn.runQuerySQL(sqlBase);
             while (result.next()) {
                 MaintenanceDTO maintenance = new MaintenanceDTO();
                 maintenance.id = result.getInt("id");
