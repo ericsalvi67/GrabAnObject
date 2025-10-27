@@ -29,7 +29,6 @@ public class UsersController{
 
     public void search() {
         String value = "";
-        String type = "";
 
         IO.println("------- Busca de Usuário -------");
         IO.println("Selecione o campo de busca:");
@@ -45,7 +44,7 @@ public class UsersController{
         IO.println("------- Busca de Usuário -------");
 
         try {
-            List<UsersDTO> results = _handler.Select(type, value);
+            List<UsersDTO> results = _handler.Select(option, value);
             IO.println("======= Resultados da Busca =======");
             IO.println(" ID |     Nome      |   Email");
             for (UsersDTO user : results) {

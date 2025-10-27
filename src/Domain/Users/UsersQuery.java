@@ -52,7 +52,7 @@ public class UsersQuery{
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " id = " + value;
+                return " and id = " + value;
             case "2": // Nome
                 return " and name LIKE '%" + value + "%'";
             case "3": // Email

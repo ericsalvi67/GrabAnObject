@@ -34,7 +34,6 @@ public class MaintenanceController{
 
 	public void search() {
 		String value = "";
-        String type = "";
 
 		IO.println("------- Busca de Manutenção -------");
 		IO.println("Selecione o campo de busca:");
@@ -52,7 +51,7 @@ public class MaintenanceController{
 		IO.println("------- Busca de Manutenção -------");
 
 		try {
-            List<MaintenanceDTO> results = _handler.Select(type, value);
+            List<MaintenanceDTO> results = _handler.Select(option, value);
             IO.println("======= Resultados da Busca =======");
             IO.println(" ID | ID do Usuário | ID do Objeto | Tipo de Serviço | Descrição");
             for (MaintenanceDTO maintenance : results) {

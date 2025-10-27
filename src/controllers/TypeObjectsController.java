@@ -28,7 +28,6 @@ public class TypeObjectsController{
 
     public void search() {
         String value = "";
-        String type = "";
 
         IO.println("------- Busca de Tipo de Objeto -------");
         IO.println("Selecione o campo de busca:");
@@ -44,7 +43,7 @@ public class TypeObjectsController{
         IO.println("------- Busca de Tipo de Objeto -------");
 
         try {
-            List<TypeObjectsDTO> results = _handler.Select(type, value);
+            List<TypeObjectsDTO> results = _handler.Select(option, value);
             IO.println("======= Resultados da Busca =======");
             IO.println(" ID |  Nome do Tipo  | Descrição");
             for (TypeObjectsDTO typeObject : results) {
