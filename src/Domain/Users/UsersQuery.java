@@ -8,14 +8,17 @@ import db.DataBaseConnectionManager;
 import db.DataBaseException;
 
 public class UsersQuery{
+    private final String _Upsert = " ON CONFLICT (email) DO UPDATE ";
+
 	public void Insert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-		String sql = "INSERT INTO users (name, email) " +
-					"VALUES ('" + user.name + "','" + user.email + "')";
+		String sqlBase = " INSERT INTO users (name, email) " +
+					"VALUES ('" + user.name + "','" + user.email + "') ";
+        String Update = " SET name = '" + user.name + "', email = '" + user.email + "', deleted = false, last_modification = now() ";
 
 		try {
-			conn.runSQL(sql);
+			conn.runSQL(sqlBase + _Upsert + Update);
             IO.println("Usuário inserido com sucesso!");
 		} catch (DataBaseException e) {
 			throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
