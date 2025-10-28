@@ -45,9 +45,10 @@ public class TypeObjectsController{
         try {
             List<TypeObjectsDTO> results = _handler.Select(option, value);
             IO.println("======= Resultados da Busca =======");
-            IO.println(" ID |  Nome do Tipo  | Descrição");
+            IO.println(" Situação | ID |  Nome do Tipo  | Descrição");
             for (TypeObjectsDTO typeObject : results) {
-                IO.println(String.format("%3s | %14s | %25s", typeObject.id, typeObject.type_name, typeObject.description));
+                IO.println(String.format("%7s | %3s | %14s | %25s", 
+                    typeObject.deleted ? "Deletado" : "Ativo", typeObject.id, typeObject.type_name, typeObject.description));
             }
             IO.println("===================================");
         } catch (Exception e) {

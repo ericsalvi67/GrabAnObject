@@ -17,7 +17,7 @@ public class ObjectsController {
 		_sc.nextLine();
 		IO.print("Nome do objeto: ");
 		dto.object_name = _sc.nextLine().trim().toUpperCase();
-		IO.print("Status (A-Ativo, M-Manutenção, B-Quebrado, L-Emprestado): ");
+		IO.print("Status (A-Ativo, M-Manutenção, B-Baixado, L-Emprestado): ");
 		dto.status = _sc.nextLine().trim().toUpperCase();
 		IO.println("----------------------------------");
 		dto.showDTO();
@@ -37,7 +37,7 @@ public class ObjectsController {
 		IO.println("1. ID");
 		IO.println("2. ID do tipo");
 		IO.println("3. Nome do Objeto");
-		IO.println("4. Status (A-Ativo, M-Manutenção, B-Quebrado, L-Emprestado)");
+		IO.println("4. Status (A-Disponível, M-Manutenção, B-Baixado, L-Emprestado)");
 		IO.print("Opção: ");
 		String option = _sc.nextLine().trim();
 		if (option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4")) {
@@ -49,9 +49,10 @@ public class ObjectsController {
 		try {
 			List<ObjectsDTO> results = _handler.Select(option, value);
 			IO.println("======= Resultados da Busca =======");
-			IO.println(" ID | ID do Tipo | Nome do Objeto | Status");
+			IO.println(" Situação | ID | ID do Tipo | Nome do Objeto | Status");
 			for (ObjectsDTO object : results) {
-				IO.println(String.format("%3s | %10s | %14s | %5s", object.id, object.type_id, object.object_name, object.status));
+				IO.println(String.format("%7s | %3s | %10s | %20s | %7s", 
+					object.deleted ? "Deletado" : "Ativo", object.id, object.type_id, object.object_name, object.status));
 			}
 			IO.println("===================================");
 		} catch (Exception e) {

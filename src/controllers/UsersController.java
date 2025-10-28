@@ -46,9 +46,10 @@ public class UsersController{
         try {
             List<UsersDTO> results = _handler.Select(option, value);
             IO.println("======= Resultados da Busca =======");
-            IO.println(" ID |     Nome      |   Email");
+            IO.println(" Situação | ID |     Nome      |       Email       ");
             for (UsersDTO user : results) {
-                IO.println(String.format("%3s | %13s | %20s", user.id, user.name, user.email));
+                IO.println(String.format("%7s | %3s | %20s | %25s", 
+                    user.deleted ? "Inativo" : "Ativo", user.id, user.name, user.email));
             }
             IO.println("===================================");
         } catch (Exception e) {

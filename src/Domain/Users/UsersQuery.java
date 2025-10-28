@@ -9,6 +9,32 @@ import db.DataBaseException;
 
 public class UsersQuery{
 
+    public List<UsersDTO> Select(String type, String value) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+    
+        List<UsersDTO> list = new ArrayList<>();
+        String sqlBase = "SELECT id, name, email FROM users WHERE" + GetType(type, value) + " ORDER BY id, deleted desc ";
+    
+        try {
+            ResultSet result = conn.runQuerySQL(sqlBase);
+            while (result.next()) {
+                UsersDTO user = new UsersDTO();
+                user.id = result.getInt("id");
+                user.name = result.getString("name");
+                user.email = result.getString("email");
+                user.deleted = result.getBoolean("deleted");
+                list.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar usuários: " + e.getMessage(), e);
+        } catch (DataBaseException e) {
+            throw new RuntimeException("Erro ao conectar com o banco: " + e.getMessage(), e);
+        } finally {
+            conn.closeConnection();
+        }
+        return list;
+    }
+
 	public void Insert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
@@ -25,41 +51,16 @@ public class UsersQuery{
 		}
     }
 
-    public List<UsersDTO> Select(String type, String value) throws DataBaseException {
-        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
-
-        List<UsersDTO> list = new ArrayList<>();
-        String sqlBase = "SELECT id, name, email FROM users WHERE not deleted " + GetType(type, value) + " ORDER BY id";
-
-        try {
-            ResultSet result = conn.runQuerySQL(sqlBase);
-            while (result.next()) {
-                UsersDTO user = new UsersDTO();
-                user.id = result.getInt("id");
-                user.name = result.getString("name");
-                user.email = result.getString("email");
-                list.add(user);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Erro ao listar usuários: " + e.getMessage(), e);
-        } catch (DataBaseException e) {
-            throw new RuntimeException("Erro ao conectar com o banco: " + e.getMessage(), e);
-        } finally {
-            conn.closeConnection();
-        }
-        return list;
-    }
-
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " and id = " + value;
+                return " id = " + value;
             case "2": // Nome
-                return " and name LIKE '%" + value + "%'";
+                return " name LIKE '%" + value + "%'";
             case "3": // Email
-                return " and email LIKE '%" + value + "%'";
+                return " email LIKE '%" + value + "%'";
             default:
-                return " and 1=1 ";
+                return " 1=1 ";
         }
     }
 

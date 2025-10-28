@@ -53,9 +53,10 @@ public class MaintenanceController{
 		try {
             List<MaintenanceDTO> results = _handler.Select(option, value);
             IO.println("======= Resultados da Busca =======");
-            IO.println(" ID | ID do Usuário | ID do Objeto | Tipo de Serviço | Descrição");
+            IO.println(" Situação | ID | ID do Usuário | ID do Objeto | Realizada em | Tipo de Serviço | Descrição");
             for (MaintenanceDTO maintenance : results) {
-                IO.println(String.format("%3s | %13s | %12s | %15s | %25s", maintenance.id, maintenance.user_id, maintenance.object_id, maintenance.service_type, maintenance.description));
+                IO.println(String.format("%7s | %3s | %12s | %12s | %15s | %25s", 
+					maintenance.deleted ? "Encerrada" : "Ativa", maintenance.id, maintenance.user_id, maintenance.object_id, maintenance.performed_at, maintenance.service_type, maintenance.description));
             }
             IO.println("===================================");
         } catch (Exception e) {
