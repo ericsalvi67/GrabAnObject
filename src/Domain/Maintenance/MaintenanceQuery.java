@@ -25,7 +25,6 @@ public class MaintenanceQuery {
                 maintenance.service_type = result.getString("service_type");
                 maintenance.description = result.getString("description");
                 maintenance.performed_at = result.getDate("performed_at");
-                maintenance.deleted = result.getBoolean("deleted");
                 list.add(maintenance);
             }
         } catch (SQLException e) {

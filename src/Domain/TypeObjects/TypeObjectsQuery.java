@@ -22,7 +22,6 @@ public class TypeObjectsQuery {
                 typeObject.id = result.getInt("id");
                 typeObject.type_name = result.getString("type_name");
                 typeObject.description = result.getString("description");
-                typeObject.deleted = result.getBoolean("deleted");
                 list.add(typeObject);
             }
         } catch (SQLException e) {

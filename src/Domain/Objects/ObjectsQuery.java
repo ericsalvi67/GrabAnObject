@@ -23,7 +23,6 @@ public class ObjectsQuery {
                 object.type_id = result.getInt("type_id");
                 object.object_name = result.getString("object_name");
                 object.status = result.getString("status");
-                object.deleted = result.getBoolean("deleted");  
                 list.add(object);
             }
         } catch (SQLException e) {

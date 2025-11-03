@@ -22,7 +22,6 @@ public class UsersQuery{
                 user.id = result.getInt("id");
                 user.name = result.getString("name");
                 user.email = result.getString("email");
-                user.deleted = result.getBoolean("deleted");
                 list.add(user);
             }
         } catch (SQLException e) {
