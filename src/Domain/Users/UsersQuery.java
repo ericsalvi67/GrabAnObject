@@ -13,7 +13,7 @@ public class UsersQuery{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
     
         List<UsersDTO> list = new ArrayList<>();
-        String sqlBase = "SELECT id, name, email FROM users WHERE" + GetType(type, value) + " ORDER BY id, deleted desc ";
+        String sqlBase = "SELECT id, name, email FROM users WHERE NOT deleted AND " + GetType(type, value) + " ORDER BY id ";
     
         try {
             ResultSet result = conn.runQuerySQL(sqlBase);

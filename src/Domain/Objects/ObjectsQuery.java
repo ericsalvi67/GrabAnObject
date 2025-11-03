@@ -13,7 +13,7 @@ public class ObjectsQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<ObjectsDTO> list = new ArrayList<>();
-        String sql = "SELECT id, type_id, object_name, status FROM objects WHERE " + GetType(type, value) + " ORDER BY id, deleted desc ";
+        String sql = "SELECT id, type_id, object_name, status FROM objects WHERE NOT deleted AND " + GetType(type, value) + " ORDER BY id ";
 
         try {
             ResultSet result = conn.runQuerySQL(sql);

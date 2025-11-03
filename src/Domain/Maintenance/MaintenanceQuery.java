@@ -13,7 +13,7 @@ public class MaintenanceQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<MaintenanceDTO> list = new ArrayList<>();
-        String sqlBase = "SELECT id, user_id, object_id, service_type, description, performed_at FROM maintenance WHERE " + GetType(type, value) + " ORDER BY id, deleted desc ";
+        String sqlBase = "SELECT id, user_id, object_id, service_type, description, performed_at FROM maintenance WHERE NOT deleted AND " + GetType(type, value) + " ORDER BY id ";
 
         try {
             ResultSet result = conn.runQuerySQL(sqlBase);
