@@ -26,7 +26,7 @@ public class MaintenanceController{
 		dto.showDTO();
 
 		try {
-			_handler.Upsert(dto);
+			_handler.Insert(dto);
 		} catch (Exception e) {
 			IO.println("Erro ao cadastrar manutenção: " + e.getMessage());
       }
@@ -118,7 +118,7 @@ public class MaintenanceController{
             String newStatus = _sc.nextLine().trim();
             newDTO.deleted = newStatus.isEmpty() ? results.get(0).deleted : newStatus.equalsIgnoreCase("E-Encerrada");
 
-            _handler.Upsert(newDTO);
+            _handler.Insert(newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());

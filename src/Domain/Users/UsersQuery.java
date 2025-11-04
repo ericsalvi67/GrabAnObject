@@ -34,13 +34,11 @@ public class UsersQuery{
         return list;
     }
 
-	public void Upsert(UsersDTO user) throws DataBaseException {
+	public void Insert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         String sqlBase = " INSERT INTO users (name, email) " +
-                        "VALUES ('" + user.name + "','" + user.email + "') " +
-                        "ON CONFLICT (email) DO UPDATE SET " +
-                        "  name = EXCLUDED.name";
+                        "VALUES ('" + user.name + "','" + user.email + "') ";
 
 		try {
 			conn.runSQL(sqlBase);
@@ -51,6 +49,22 @@ public class UsersQuery{
 			conn.closeConnection();
 		}
     }
+
+    public void Update(int id, UsersDTO user) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+		String sqlBase = " UPDATE users SET name = '" + user.name + "', email = '" + user.email + "' WHERE id = " + id;
+
+		try {
+			conn.runSQL(sqlBase);
+            IO.println("Usuário atualizado com sucesso!");
+		} catch (DataBaseException e) {
+			throw new RuntimeException("Erro ao executar atualização no banco: " + e.getMessage(), e);
+		} finally {
+			conn.closeConnection();
+		}
+    }
+
 
     public void Delete(int id) throws DataBaseException{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");

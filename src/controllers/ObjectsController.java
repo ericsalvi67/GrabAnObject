@@ -23,7 +23,7 @@ public class ObjectsController {
 		dto.showDTO();
 
 		try {
-			_handler.Upsert(dto);
+			_handler.Insert(dto);
 		} catch (Exception e) {
 			IO.println("Erro ao cadastrar objeto: " + e.getMessage());
       }
@@ -114,7 +114,7 @@ public class ObjectsController {
             String newStatus = _sc.nextLine().trim();
             newDTO.status = newStatus.isEmpty() ? results.get(0).status : newStatus.toUpperCase();
 
-            _handler.Upsert(newDTO);
+            _handler.Insert(newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir objeto: " + e.getMessage());

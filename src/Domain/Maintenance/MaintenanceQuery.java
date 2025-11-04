@@ -9,24 +9,6 @@ import db.DataBaseException;
 
 public class MaintenanceQuery {
 
-   public void Insert(MaintenanceDTO maintenance) throws DataBaseException {
-        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
-
-    String sql = " INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
-            " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now()) " +
-            "ON CONFLICT (user_id, object_id, service_type) DO UPDATE SET " +
-            "  service_type = EXCLUDED.service_type, " +
-            "  description = EXCLUDED.description ";
-        try {
-            conn.runSQL(sql);
-            IO.println("Manutenção inserida com sucesso!");
-        } catch (DataBaseException e) {
-            throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
-        } finally {
-            conn.closeConnection();
-        }
-    }
-
     public List<MaintenanceDTO> Select(String type, String value) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
@@ -56,6 +38,35 @@ public class MaintenanceQuery {
         return list;
     }
 
+   public void Insert(MaintenanceDTO maintenance) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+    String sql = " INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
+            " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now()) ";
+        try {
+            conn.runSQL(sql);
+            IO.println("Manutenção inserida com sucesso!");
+        } catch (DataBaseException e) {
+            throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
+        } finally {
+            conn.closeConnection();
+        }
+    }
+
+    public void Update(int id, MaintenanceDTO maintenance) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+		String sqlBase = " UPDATE maintenance SET service_type = '" + maintenance.service_type + "', description = '" + maintenance.description + "' WHERE id = " + id;
+
+		try {
+			conn.runSQL(sqlBase);
+            IO.println("Manutenção atualizada com sucesso!");
+		} catch (DataBaseException e) {
+			throw new RuntimeException("Erro ao executar atualização no banco: " + e.getMessage(), e);
+		} finally {
+			conn.closeConnection();
+		}
+    }
     public void Delete(int id) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 

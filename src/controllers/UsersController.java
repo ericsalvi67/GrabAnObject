@@ -21,7 +21,7 @@ public class UsersController{
         dto.showDTO();
 
         try {
-            _handler.Upsert(dto);
+            _handler.Insert(dto);
         } catch (Exception e) {
             IO.println("Erro ao cadastrar usuário: " + e.getMessage());
       }
@@ -107,7 +107,7 @@ public class UsersController{
             String newEmail = _sc.nextLine().trim();
             newDTO.email = newEmail.isEmpty() ? results.get(0).email : newEmail.toUpperCase();
 
-            _handler.Upsert(newDTO);
+            _handler.Insert(newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());

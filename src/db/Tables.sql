@@ -2,7 +2,6 @@ CREATE TABLE users (
 	id serial NOT NULL,
 	name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
-    deleted boolean NOT NULL DEFAULT FALSE,
     last_modification timestamp NOT NULL DEFAULT now(),
 	CONSTRAINT users_pk PRIMARY KEY (id),
     CONSTRAINT email_un UNIQUE (email)
@@ -12,7 +11,6 @@ CREATE TABLE type_objects (
 	id serial NOT NULL,
 	type_name varchar(255) NOT NULL,
     description varchar(1000) NULL,
-    deleted boolean NOT NULL DEFAULT FALSE,
     last_modification timestamp NOT NULL DEFAULT now(),
 	CONSTRAINT type_objects_pk PRIMARY KEY (id)
 );
@@ -22,7 +20,6 @@ CREATE TABLE objects (
 	type_id int4 NOT NULL,
     object_name varchar(255) NOT NULL,
     status varchar(2) NOT NULL,
-    deleted boolean NOT NULL DEFAULT FALSE,
     last_modification timestamp NOT NULL DEFAULT now(),
 	CONSTRAINT objects_pk PRIMARY KEY (id),
 	CONSTRAINT type_objects_fk FOREIGN KEY (type_id) REFERENCES type_objects(id)
@@ -35,7 +32,7 @@ CREATE TABLE maintenance (
     service_type varchar(255) NOT NULL,
     description varchar(1000) NOT NULL,
     performed_at timestamp NOT NULL,
-    deleted boolean NOT NULL DEFAULT FALSE,
+    on_maintenance boolean NOT NULL DEFAULT FALSE,
     last_modification timestamp NOT NULL DEFAULT now(),
 	CONSTRAINT maintenance_pk PRIMARY KEY (id),
 	CONSTRAINT objects_fk FOREIGN KEY (object_id) REFERENCES objects(id),

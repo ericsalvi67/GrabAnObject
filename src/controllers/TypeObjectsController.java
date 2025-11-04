@@ -20,7 +20,7 @@ public class TypeObjectsController {
         dto.showDTO();
 
         try {
-            _handler.Upsert(dto);
+            _handler.Insert(dto);
         } catch (Exception e) {
           IO.println("Erro ao cadastrar tipo de objeto: " + e.getMessage());
         }
@@ -106,7 +106,7 @@ public class TypeObjectsController {
             String newDescription = _sc.nextLine().trim();
             newDTO.description = newDescription.isEmpty() ? results.get(0).description : newDescription.toUpperCase();
 
-            _handler.Upsert(newDTO);
+            _handler.Insert(newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());

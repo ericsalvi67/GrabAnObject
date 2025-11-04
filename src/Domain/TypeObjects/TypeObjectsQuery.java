@@ -9,24 +9,6 @@ import db.DataBaseException;
 
 public class TypeObjectsQuery {
     
-   public void Upsert(TypeObjectsDTO typeObject) throws DataBaseException {
-        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
-
-        String sqlBase = " INSERT INTO type_objects (type_name, description) " +
-            "VALUES ('" + typeObject.type_name + "','" + typeObject.description + "') " +
-            "ON CONFLICT (type_name) DO UPDATE SET " +
-            "  description = EXCLUDED.description";
-
-        try {
-            conn.runSQL(sqlBase);
-            IO.println("Tipo de objeto inserido com sucesso!");
-        } catch (DataBaseException e) {
-            throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
-        } finally {
-            conn.closeConnection();
-        }
-    }
-
     public List<TypeObjectsDTO> Select(String type, String value) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
@@ -50,6 +32,37 @@ public class TypeObjectsQuery {
             conn.closeConnection();
         }
         return list;
+    }
+
+    public void Insert(TypeObjectsDTO typeObject) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+        String sqlBase = " INSERT INTO type_objects (type_name, description) " +
+            "VALUES ('" + typeObject.type_name + "','" + typeObject.description + "') ";
+
+        try {
+            conn.runSQL(sqlBase);
+            IO.println("Tipo de objeto inserido com sucesso!");
+        } catch (DataBaseException e) {
+            throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
+        } finally {
+            conn.closeConnection();
+        }
+    }
+
+    public void Update(int id, TypeObjectsDTO typeObject) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+		String sqlBase = " UPDATE type_objects SET type_name = '" + typeObject.type_name + "', description = '" + typeObject.description + "' WHERE id = " + id;
+
+		try {
+			conn.runSQL(sqlBase);
+            IO.println("Tipo de objeto atualizado com sucesso!");
+		} catch (DataBaseException e) {
+			throw new RuntimeException("Erro ao executar atualização no banco: " + e.getMessage(), e);
+		} finally {
+			conn.closeConnection();
+		}
     }
 
     public void Delete(int id) throws DataBaseException{
