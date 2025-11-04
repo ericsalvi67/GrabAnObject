@@ -20,7 +20,7 @@ public class TypeObjectsController {
         dto.showDTO();
 
         try {
-            _handler.Insert(dto);
+            _handler.Upsert(dto);
         } catch (Exception e) {
           IO.println("Erro ao cadastrar tipo de objeto: " + e.getMessage());
         }
@@ -82,6 +82,37 @@ public class TypeObjectsController {
             IO.println("Erro ao excluir tipo de objeto: " + e.getMessage());
         }
     }
+
+    public void update() {
+        IO.println("------- Atualização de Tipo de Objeto -------");
+        IO.print("Busque por ID (recomendado consulta):");
+        String value = _sc.nextLine().trim();
+        _sc.nextLine();
+        IO.println("------- Atualização de Tipo de Objeto -------");
+        try {
+            List<TypeObjectsDTO> results = _handler.Select("1", value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum tipo de objeto encontrado para atualização.");
+                return;
+            }
+            showTypeObjects(results);
+
+            TypeObjectsDTO newDTO = new TypeObjectsDTO();
+            IO.println("Digite os novos dados do tipo de objeto (vazios para manter):");
+            IO.print("Nome (atual: " + results.get(0).type_name + "): ");
+            String newName = _sc.nextLine().trim();
+            newDTO.type_name = newName.isEmpty() ? results.get(0).type_name : newName.toUpperCase();
+            IO.print("Descrição (atual: " + results.get(0).description + "): ");
+            String newDescription = _sc.nextLine().trim();
+            newDTO.description = newDescription.isEmpty() ? results.get(0).description : newDescription.toUpperCase();
+
+            _handler.Upsert(newDTO);
+
+        } catch (Exception e) {
+            IO.println("Erro ao excluir usuário: " + e.getMessage());
+        }
+    }
+    
 
     public void showTypeObjects(List<TypeObjectsDTO> list) {
         IO.println("======= Resultados da Busca =======");

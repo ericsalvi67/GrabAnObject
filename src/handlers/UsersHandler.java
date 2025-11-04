@@ -9,13 +9,13 @@ import db.DataBaseException;
 public class UsersHandler {
     private UsersQuery _query = new UsersQuery();
 
-    public void Insert(UsersDTO newDTO) throws Exception {
+    public void Upsert(UsersDTO newDTO) throws Exception {
         if (newDTO.name.isBlank())
             throw new IllegalArgumentException("Nome não pode estar em branco");
         if (newDTO.email.isBlank() || !newDTO.email.contains("@")) 
             throw new IllegalArgumentException("Email é inválido");
             
-        _query.Insert(newDTO);
+        _query.Upsert(newDTO);
     }
 
     public List<UsersDTO> Select(String type, String value) throws DataBaseException {

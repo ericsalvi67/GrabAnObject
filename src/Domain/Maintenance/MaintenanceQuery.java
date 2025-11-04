@@ -12,9 +12,11 @@ public class MaintenanceQuery {
    public void Insert(MaintenanceDTO maintenance) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-        String sql = "INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
-                    " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now())";
-
+    String sql = " INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
+            " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now()) " +
+            "ON CONFLICT (user_id, object_id, service_type) DO UPDATE SET " +
+            "  service_type = EXCLUDED.service_type, " +
+            "  description = EXCLUDED.description ";
         try {
             conn.runSQL(sql);
             IO.println("Manutenção inserida com sucesso!");
@@ -29,7 +31,7 @@ public class MaintenanceQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<MaintenanceDTO> list = new ArrayList<>();
-        String sql = "SELECT id, user_id, object_id, service_type, description, performed_at FROM maintenance WHERE not deleted " + GetType(type, value) + " ORDER BY id";
+        String sql = "SELECT id, user_id, object_id, service_type, description, performed_at, deleted FROM maintenance WHERE " + GetType(type, value) + " ORDER BY id";
 
         try {
             ResultSet result = conn.runQuerySQL(sql);
@@ -41,6 +43,7 @@ public class MaintenanceQuery {
                 maintenance.service_type = result.getString("service_type");
                 maintenance.description = result.getString("description");
                 maintenance.performed_at = result.getDate("performed_at");
+                maintenance.deleted = result.getBoolean("deleted");
                 list.add(maintenance);
             }
         } catch (SQLException e) {
@@ -56,7 +59,7 @@ public class MaintenanceQuery {
     public void Delete(int id) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-		String sqlBase = " UPDATE maintenance SET deleted = TRUE WHERE id = " + id;
+		String sqlBase = " DELETE FROM maintenance WHERE id = " + id;
 
 		try {
 			conn.runSQL(sqlBase);
@@ -71,17 +74,17 @@ public class MaintenanceQuery {
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " and id = " + value;
+                return " id = " + value;
             case "2": // ID do Usuário
-                return " and user_id = " + value;
+                return " user_id = " + value;
             case "3": // ID do Objeto
-                return " and object_id = " + value;
+                return " object_id = " + value;
             case "4": // Tipo de Serviço
-                return " and service_type LIKE '%" + value + "%'";
+                return " service_type LIKE '%" + value + "%'";
             case "5": // Descrição
-                return " and description LIKE '%" + value + "%'";
+                return " description LIKE '%" + value + "%'";
             default:
-                return " and 1=1 ";
+                return " 1=1 ";
         }
     }
 }

@@ -10,7 +10,7 @@ import db.DataBaseException;
 public class MaintenanceHandler {
     private MaintenanceQuery _query = new MaintenanceQuery();
 
-    public void Insert(MaintenanceDTO newDTO) throws Exception {
+    public void Upsert(MaintenanceDTO newDTO) throws Exception {
         if (newDTO.user_id <= 0)
             throw new IllegalArgumentException("ID do Usuário não pode estar em branco");
         if (newDTO.object_id <= 0)

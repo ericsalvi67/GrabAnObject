@@ -26,7 +26,7 @@ public class MaintenanceController{
 		dto.showDTO();
 
 		try {
-			_handler.Insert(dto);
+			_handler.Upsert(dto);
 		} catch (Exception e) {
 			IO.println("Erro ao cadastrar manutenção: " + e.getMessage());
       }
@@ -90,6 +90,39 @@ public class MaintenanceController{
 		} catch (Exception e) {
 			IO.println("Erro ao excluir tipo de objeto: " + e.getMessage());
 		}
+    }
+
+    public void update() {
+        IO.println("------- Atualização de Manutenção -------");
+        IO.print("Busque por ID (recomendado consulta):");
+        String value = _sc.nextLine().trim();
+        _sc.nextLine();
+        IO.println("------- Atualização de Manutenção -------");
+        try {
+            List<MaintenanceDTO> results = _handler.Select("1", value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum registro de manutenção encontrado para atualização.");
+                return;
+            }
+            showMaintenance(results);
+
+            MaintenanceDTO newDTO = new MaintenanceDTO();
+            IO.println("Digite os novos dados da manutenção (vazios para manter):");
+            IO.print("Tipo de Serviço (atual: " + results.get(0).service_type + "): ");
+            String newServiceType = _sc.nextLine().trim();
+            newDTO.service_type = newServiceType.isEmpty() ? results.get(0).service_type : newServiceType;
+            IO.print("Descrição (atual: " + results.get(0).description + "): ");
+            String newDescription = _sc.nextLine().trim();
+            newDTO.description = newDescription.isEmpty() ? results.get(0).description : newDescription;
+            IO.print("Status (A-Ativa, E-Encerrada) (atual: " + (results.get(0).deleted ? "E-Encerrada" : "A-Ativa") + "): ");
+            String newStatus = _sc.nextLine().trim();
+            newDTO.deleted = newStatus.isEmpty() ? results.get(0).deleted : newStatus.equalsIgnoreCase("E-Encerrada");
+
+            _handler.Upsert(newDTO);
+
+        } catch (Exception e) {
+            IO.println("Erro ao excluir usuário: " + e.getMessage());
+        }
     }
 
     private void showMaintenance(List<MaintenanceDTO> results) {

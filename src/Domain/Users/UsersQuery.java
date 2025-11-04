@@ -13,7 +13,7 @@ public class UsersQuery{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
     
         List<UsersDTO> list = new ArrayList<>();
-        String sqlBase = "SELECT id, name, email FROM users WHERE NOT deleted AND " + GetType(type, value) + " ORDER BY id ";
+        String sqlBase = "SELECT id, name, email FROM users WHERE NOT deleted " + GetType(type, value) + " ORDER BY id ";
     
         try {
             ResultSet result = conn.runQuerySQL(sqlBase);
@@ -34,11 +34,13 @@ public class UsersQuery{
         return list;
     }
 
-	public void Insert(UsersDTO user) throws DataBaseException {
+	public void Upsert(UsersDTO user) throws DataBaseException {
 		DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-		String sqlBase = " INSERT INTO users (name, email) " +
-					"VALUES ('" + user.name + "','" + user.email + "') ";
+        String sqlBase = " INSERT INTO users (name, email) " +
+                        "VALUES ('" + user.name + "','" + user.email + "') " +
+                        "ON CONFLICT (email) DO UPDATE SET " +
+                        "  name = EXCLUDED.name";
 
 		try {
 			conn.runSQL(sqlBase);
@@ -53,7 +55,7 @@ public class UsersQuery{
     public void Delete(int id) throws DataBaseException{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-		String sqlBase = " UPDATE users SET deleted = TRUE WHERE id = " + id;
+		String sqlBase = " DELETE FROM users WHERE id = " + id;
 
 		try {
 			conn.runSQL(sqlBase);
@@ -68,13 +70,13 @@ public class UsersQuery{
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " id = " + value;
+                return " AND id = " + value;
             case "2": // Nome
-                return " name LIKE '%" + value + "%'";
+                return " AND name LIKE '%" + value + "%'";
             case "3": // Email
-                return " email LIKE '%" + value + "%'";
+                return " AND email LIKE '%" + value + "%'";
             default:
-                return " 1=1 ";
+                return " AND 1=1 ";
         }
     }
 }

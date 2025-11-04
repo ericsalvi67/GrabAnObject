@@ -21,7 +21,7 @@ public class UsersController{
         dto.showDTO();
 
         try {
-            _handler.Insert(dto);
+            _handler.Upsert(dto);
         } catch (Exception e) {
             IO.println("Erro ao cadastrar usuário: " + e.getMessage());
       }
@@ -78,6 +78,36 @@ public class UsersController{
             _sc.nextLine();
 
             _handler.Delete(id);
+
+        } catch (Exception e) {
+            IO.println("Erro ao excluir usuário: " + e.getMessage());
+        }
+    }
+
+    public void update() {
+        IO.println("------- Atualização de Usuário -------");
+        IO.print("Busque por ID (recomendado consulta):");
+        String value = _sc.nextLine().trim();
+        _sc.nextLine();
+        IO.println("------- Atualização de Usuário -------");
+        try {
+            List<UsersDTO> results = _handler.Select("1", value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum usuário encontrado para atualização.");
+                return;
+            }
+            showUsers(results);
+
+            UsersDTO newDTO = new UsersDTO();
+            IO.println("Digite os novos dados do usuário (vazios para manter):");
+            IO.print("Nome (atual: " + results.get(0).name + "): ");
+            String newName = _sc.nextLine().trim();
+            newDTO.name = newName.isEmpty() ? results.get(0).name : newName.toUpperCase();
+            IO.print("Email (atual: " + results.get(0).email + "): ");
+            String newEmail = _sc.nextLine().trim();
+            newDTO.email = newEmail.isEmpty() ? results.get(0).email : newEmail.toUpperCase();
+
+            _handler.Upsert(newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());
