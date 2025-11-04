@@ -52,16 +52,54 @@ public class MaintenanceController{
 
 		try {
             List<MaintenanceDTO> results = _handler.Select(option, value);
-            IO.println("======= Resultados da Busca =======");
+            showMaintenance(results);
+        } catch (Exception e) {
+            IO.println("Erro durante a busca: " + e.getMessage());
+        }
+    }
+
+    public void delete() {
+		String value = "";
+
+		IO.println("------- Exclusão de Tipo de Objeto -------");
+		IO.println("Selecione o campo de busca:");
+		IO.println("1. ID");
+		IO.println("2. ID do tipo");
+		IO.println("3. Nome do Objeto");
+		IO.println("4. Status (A-Disponível, M-Manutenção, B-Baixado, L-Emprestado)");
+		IO.print("Opção: ");
+		String option = _sc.nextLine().trim();
+		if (option.equals("1") || option.equals("2") || option.equals("3") || option.equals("4")) {
+			IO.print("Digite o valor da busca: ");
+			value = _sc.nextLine().trim().toUpperCase();
+		}
+		IO.println("------- Exclusão de Tipo de Objeto -------");
+		try {
+			List<MaintenanceDTO> results = _handler.Select(option, value);
+			if (results.isEmpty()) {
+					IO.println("Nenhum tipo de objeto encontrado para exclusão.");
+					return;
+			}
+			showMaintenance(results);
+			IO.print("Digite o ID do tipo de objeto que deseja excluir: ");
+			int id = _sc.nextInt();
+			_sc.nextLine();
+
+			_handler.Delete(id);
+
+		} catch (Exception e) {
+			IO.println("Erro ao excluir tipo de objeto: " + e.getMessage());
+		}
+    }
+
+    private void showMaintenance(List<MaintenanceDTO> results) {
+        IO.println("======= Resultados da Busca =======");
             IO.println(" Situação | ID | ID do Usuário | ID do Objeto | Realizada em | Tipo de Serviço | Descrição");
             for (MaintenanceDTO maintenance : results) {
                 IO.println(String.format("%7s | %3s | %12s | %12s | %15s | %25s", 
 					maintenance.deleted ? "Encerrada" : "Ativa", maintenance.id, maintenance.user_id, maintenance.object_id, maintenance.performed_at, maintenance.service_type, maintenance.description));
             }
             IO.println("===================================");
-        } catch (Exception e) {
-            IO.println("Erro durante a busca: " + e.getMessage());
-        }
     }
 }    
 

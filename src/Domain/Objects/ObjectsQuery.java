@@ -9,11 +9,27 @@ import db.DataBaseException;
 
 public class ObjectsQuery {
 
+   public void Insert(ObjectsDTO object) throws DataBaseException {
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+        String sql = "INSERT INTO objects (type_id, object_name, status) " +
+                    " VALUES ('" + object.type_id + "', '" + object.object_name + "', '" + object.status + "')";
+
+        try {
+            conn.runSQL(sql);
+            IO.println("Objeto inserido com sucesso!");
+        } catch (DataBaseException e) {
+            throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
+        } finally {
+            conn.closeConnection();
+        }
+    }
+
     public List<ObjectsDTO> Select(String type, String value) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<ObjectsDTO> list = new ArrayList<>();
-        String sql = "SELECT id, type_id, object_name, status FROM objects WHERE NOT deleted AND " + GetType(type, value) + " ORDER BY id ";
+        String sql = "SELECT id, type_id, object_name, status FROM objects WHERE not deleted " + GetType(type, value) + " ORDER BY id";
 
         try {
             ResultSet result = conn.runQuerySQL(sql);
@@ -35,34 +51,33 @@ public class ObjectsQuery {
         return list;
     }
 
-    public void Insert(ObjectsDTO object) throws DataBaseException {
+    public void Delete(int id) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
-        String sqlBase = "INSERT INTO objects (type_id, object_name, status) " +
-                    " VALUES ('" + object.type_id + "', '" + object.object_name + "', '" + object.status + "')";
+		String sqlBase = " UPDATE objects SET deleted = TRUE WHERE id = " + id;
 
-        try {
-            conn.runSQL(sqlBase);
-            IO.println("Objeto inserido com sucesso!");
-        } catch (DataBaseException e) {
-            throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
-        } finally {
-            conn.closeConnection();
-        }
+		try {
+			conn.runSQL(sqlBase);
+            IO.println("Tipo de objeto deletado com sucesso!");
+		} catch (DataBaseException e) {
+			throw new RuntimeException("Erro ao executar exclusão no banco: " + e.getMessage(), e);
+		} finally {
+			conn.closeConnection();
+		}
     }
 
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " id = " + value;
+                return " and id = " + value;
             case "2": // ID do Tipo
-                return " type_id = " + value;
+                return " and type_id = " + value;
             case "3": // Nome do Objeto
-                return " object_name LIKE '%" + value + "%'";
+                return " and object_name LIKE '%" + value + "%'";
             case "4": // Status
-                return " status LIKE '%" + value + "%'";
+                return " and status LIKE '%" + value + "%'";
             default:
-                return " 1=1 ";
+                return " and 1=1 ";
         }
     }
 }

@@ -26,4 +26,11 @@ public class ObjectsHandler {
         }
         return _query.Select(type, value);
     }
+
+    public void Delete(int id) throws DataBaseException {
+        if (id <= 0 || id == 0) {
+            throw new IllegalArgumentException("ID inválido para exclusão");
+        }
+        _query.Delete(id);
+    }
 }

@@ -5,7 +5,7 @@ import java.util.*;
 import Domain.TypeObjects.TypeObjectsDTO;
 import handlers.TypeObjectsHandler;
 
-public class TypeObjectsController{
+public class TypeObjectsController {
     private static Scanner _sc = new Scanner(System.in);
     private static final TypeObjectsHandler _handler = new TypeObjectsHandler();
 
@@ -44,16 +44,51 @@ public class TypeObjectsController{
 
         try {
             List<TypeObjectsDTO> results = _handler.Select(option, value);
-            IO.println("======= Resultados da Busca =======");
-            IO.println(" Situação | ID |  Nome do Tipo  | Descrição");
-            for (TypeObjectsDTO typeObject : results) {
-                IO.println(String.format("%7s | %3s | %14s | %25s", 
-                    typeObject.deleted ? "Deletado" : "Ativo", typeObject.id, typeObject.type_name, typeObject.description));
-            }
-            IO.println("===================================");
+            showTypeObjects(results);
         } catch (Exception e) {
             IO.println("Erro durante a busca: " + e.getMessage());
         }
     }
-  
+
+    public void delete() {
+        String value = "";
+
+        IO.println("------- Exclusão de Tipo de Objeto -------");
+        IO.println("Selecione o campo de busca:");
+        IO.println("1. ID");
+        IO.println("2. Nome do tipo de objeto");
+        IO.println("3. Descrição");
+        IO.print("Opção: ");
+        String option = _sc.nextLine().trim();
+        if (option.equals("1") || option.equals("2") || option.equals("3")) {
+            IO.print("Digite o valor da busca: ");
+            value = _sc.nextLine().trim().toUpperCase();
+        }
+        IO.println("------- Exclusão de Tipo de Objeto -------");
+        try {
+            List<TypeObjectsDTO> results = _handler.Select(option, value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum tipo de objeto encontrado para exclusão.");
+                return;
+            }
+            showTypeObjects(results);
+            IO.print("Digite o ID do tipo de objeto que deseja excluir: ");
+            int id = _sc.nextInt();
+            _sc.nextLine();
+
+            _handler.Delete(id);
+
+        } catch (Exception e) {
+            IO.println("Erro ao excluir tipo de objeto: " + e.getMessage());
+        }
+    }
+
+    public void showTypeObjects(List<TypeObjectsDTO> list) {
+        IO.println("======= Resultados da Busca =======");
+        IO.println(" ID |  Nome do Tipo  | Descrição");
+        for (TypeObjectsDTO typeObject : list) {
+            IO.println(String.format("%3s | %14s | %25s", typeObject.id, typeObject.type_name, typeObject.description));
+        }
+        IO.println("===================================");
+    }
 }

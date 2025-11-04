@@ -45,15 +45,52 @@ public class UsersController{
 
         try {
             List<UsersDTO> results = _handler.Select(option, value);
-            IO.println("======= Resultados da Busca =======");
-            IO.println(" Situação | ID |     Nome      |       Email       ");
-            for (UsersDTO user : results) {
-                IO.println(String.format("%7s | %3s | %20s | %25s", 
-                    user.deleted ? "Inativo" : "Ativo", user.id, user.name, user.email));
-            }
-            IO.println("===================================");
+            showUsers(results);
         } catch (Exception e) {
             IO.println("Erro durante a busca: " + e.getMessage());
         }
+    }
+
+    public void delete() {
+        String value = "";
+
+        IO.println("------- Exclusão de Usuário -------");
+        IO.println("Selecione o campo de busca:");
+        IO.println("1. ID");
+        IO.println("2. Nome");
+        IO.println("3. Email");
+        IO.print("Opção: ");
+        String option = _sc.nextLine().trim();
+        if (option.equals("1") || option.equals("2") || option.equals("3")) {
+            IO.print("Digite o valor da busca: ");
+            value = _sc.nextLine().trim().toUpperCase();
+        }
+        IO.println("------- Exclusão de Usuário -------");
+        try {
+            List<UsersDTO> results = _handler.Select(option, value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum usuário encontrado para exclusão.");
+                return;
+            }
+            showUsers(results);
+            IO.print("Digite o ID do usuário que deseja excluir: ");
+            int id = _sc.nextInt();
+            _sc.nextLine();
+
+            _handler.Delete(id);
+
+        } catch (Exception e) {
+            IO.println("Erro ao excluir usuário: " + e.getMessage());
+        }
+    }
+
+    private void showUsers(List<UsersDTO> results) {
+        IO.println("======= Resultados da Busca =======");
+        IO.println(" Situação | ID |     Nome      |       Email       ");
+        for (UsersDTO user : results) {
+            IO.println(String.format("%7s | %3s | %20s | %25s", 
+                user.deleted ? "Inativo" : "Ativo", user.id, user.name, user.email));
+        }
+        IO.println("===================================");
     }
 }

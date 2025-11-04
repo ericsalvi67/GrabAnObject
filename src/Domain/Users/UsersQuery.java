@@ -50,6 +50,21 @@ public class UsersQuery{
 		}
     }
 
+    public void Delete(int id) throws DataBaseException{
+        DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
+
+		String sqlBase = " UPDATE users SET deleted = TRUE WHERE id = " + id;
+
+		try {
+			conn.runSQL(sqlBase);
+            IO.println("Usuário deletado com sucesso!");
+		} catch (DataBaseException e) {
+			throw new RuntimeException("Erro ao executar exclusão no banco: " + e.getMessage(), e);
+		} finally {
+			conn.closeConnection();
+		}
+    }
+
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
@@ -62,5 +77,4 @@ public class UsersQuery{
                 return " 1=1 ";
         }
     }
-
 }
