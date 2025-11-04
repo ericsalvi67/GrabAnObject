@@ -31,6 +31,11 @@ public class MainController {
                 case "2":
                     consultarMenu(sc);
                     break;
+                case "3":
+                    break;
+                case "4":
+                    deletaMenu(sc);
+                    break;
                 case "0":
                     exit = true;
                     break;
@@ -51,7 +56,7 @@ public class MainController {
             IO.println("2. Tipos de objetos");
             IO.println("3. Objetos");
             IO.println("4. Manutenção");
-            IO.println("0. Sair");
+            IO.println("0. Voltar");
             IO.print("\nEscolha a sua opção: ");
 
             String opt = sc.nextLine();
@@ -79,30 +84,66 @@ public class MainController {
     }
 
     private void consultarMenu(Scanner sc) {
+            boolean back = false;
+            while (!back) {
+                IO.println("Consultar");
+                IO.println("");
+                IO.println("1. Pessoas");
+                IO.println("2. Tipos de objetos");
+                IO.println("3. Objetos");
+                IO.println("4. Manutenção");
+                IO.println("0. Voltar");
+                IO.print("\nEscolha a sua opção: ");
+
+                String opt = sc.nextLine();
+                switch (opt) {
+                    case "1":
+                        new UsersController().search();
+                        break;
+                    case "2":
+                        new TypeObjectsController().search();
+                        break;
+                    case "3":
+                        new ObjectsController().search();
+                        break;
+                    case "4":
+                        new MaintenanceController().search();
+                        break;
+                    case "0":
+                        back = true;
+                        break;
+                    default:
+                        IO.println("Opção inválida.");
+                }
+                IO.println("");
+            }
+    }
+
+    private void deletaMenu(Scanner sc) {
         boolean back = false;
         while (!back) {
-            IO.println("Consultar");
+            IO.println("Excluir");
             IO.println("");
             IO.println("1. Pessoas");
             IO.println("2. Tipos de objetos");
             IO.println("3. Objetos");
             IO.println("4. Manutenção");
-            IO.println("0. Sair");
+            IO.println("0. Voltar");
             IO.print("\nEscolha a sua opção: ");
 
             String opt = sc.nextLine();
             switch (opt) {
                 case "1":
-                    new UsersController().search();
+                    new UsersController().delete();
                     break;
                 case "2":
-                    new TypeObjectsController().search();
+                    new TypeObjectsController().delete();
                     break;
                 case "3":
-                    new ObjectsController().search();
+                    new ObjectsController().delete();
                     break;
                 case "4":
-                    new MaintenanceController().search();
+                    new MaintenanceController().delete();
                     break;
                 case "0":
                     back = true;
@@ -113,4 +154,5 @@ public class MainController {
             IO.println("");
         }
     }
+
 }
