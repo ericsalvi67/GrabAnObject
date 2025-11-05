@@ -43,8 +43,11 @@ public class MaintenanceQuery {
 
     String sql = " INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
             " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now()) ";
+    String sql2 = " UPDATE objects SET status = 'M' WHERE id = " + maintenance.object_id + ";";
+
         try {
             conn.runSQL(sql);
+            conn.runSQL(sql2);
             IO.println("Manutenção inserida com sucesso!");
         } catch (DataBaseException e) {
             throw new RuntimeException("Erro ao executar inserção no banco: " + e.getMessage(), e);
@@ -71,9 +74,11 @@ public class MaintenanceQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sqlBase = " DELETE FROM maintenance WHERE id = " + id;
+        String sql2 = " UPDATE objects SET status = 'A' WHERE id = " + id ;
 
 		try {
 			conn.runSQL(sqlBase);
+            conn.runSQL(sql2);
             IO.println("Manutenção deletada com sucesso!");
 		} catch (DataBaseException e) {
 			throw new RuntimeException("Erro ao executar exclusão no banco: " + e.getMessage(), e);

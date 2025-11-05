@@ -4,11 +4,14 @@ import java.util.List;
 
 import Domain.Maintenance.MaintenanceDTO;
 import Domain.Maintenance.MaintenanceQuery;
+import Domain.Objects.ObjectsDTO;
+import Domain.Objects.ObjectsQuery;
 import db.DataBaseException;
 
 
 public class MaintenanceHandler {
     private MaintenanceQuery _query = new MaintenanceQuery();
+    private ObjectsQuery _objectQuery = new ObjectsQuery();
 
     public List<MaintenanceDTO> Select(String type, String value) throws DataBaseException {
         if (type == null || value == null) {
@@ -26,6 +29,11 @@ public class MaintenanceHandler {
             throw new IllegalArgumentException("Tipo de serviço não pode estar em branco");
         if (newDTO.description.isBlank())
             throw new IllegalArgumentException("Descrição não pode estar em branco");
+
+        List<ObjectsDTO> objects = _objectQuery.Select("1", Integer.toString(newDTO.object_id));
+        if(objects.get(0).status.equals("M") || objects.get(0).status.equals("L") || objects.get(0).status.equals("B")) {
+            throw new IllegalArgumentException("Objeto não pode passar por manutenção");
+        }
 
         _query.Insert(newDTO);
     }
