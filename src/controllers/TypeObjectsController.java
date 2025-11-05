@@ -87,7 +87,6 @@ public class TypeObjectsController {
         IO.println("------- Atualização de Tipo de Objeto -------");
         IO.print("Busque por ID (recomendado consulta):");
         String value = _sc.nextLine().trim();
-        _sc.nextLine();
         IO.println("------- Atualização de Tipo de Objeto -------");
         try {
             List<TypeObjectsDTO> results = _handler.Select("1", value);
@@ -95,8 +94,8 @@ public class TypeObjectsController {
                 IO.println("Nenhum tipo de objeto encontrado para atualização.");
                 return;
             }
-            showTypeObjects(results);
 
+            IO.println("===================================");
             TypeObjectsDTO newDTO = new TypeObjectsDTO();
             IO.println("Digite os novos dados do tipo de objeto (vazios para manter):");
             IO.print("Nome (atual: " + results.get(0).type_name + "): ");
@@ -106,7 +105,7 @@ public class TypeObjectsController {
             String newDescription = _sc.nextLine().trim();
             newDTO.description = newDescription.isEmpty() ? results.get(0).description : newDescription.toUpperCase();
 
-            _handler.Insert(newDTO);
+            _handler.Update(value, newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());

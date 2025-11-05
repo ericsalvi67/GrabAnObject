@@ -11,6 +11,7 @@ public class MaintenanceDTO extends ERDataResources{
     public String service_type;
     public String description;
     public Date performed_at;
+    public boolean on_maintenance;
 
     public MaintenanceDTO() {}
 
@@ -31,6 +32,7 @@ public class MaintenanceDTO extends ERDataResources{
 		IO.println("Tipo de serviço: " + this.service_type);
 		IO.println("Descrição: " + this.description);
         IO.println("Realizada em: " + this.performed_at);
+        IO.println("Em manutenção: " + this.on_maintenance);
 		IO.println("===================================");
 	}
 

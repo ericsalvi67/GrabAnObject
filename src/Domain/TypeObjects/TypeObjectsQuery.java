@@ -50,7 +50,7 @@ public class TypeObjectsQuery {
         }
     }
 
-    public void Update(int id, TypeObjectsDTO typeObject) throws DataBaseException {
+    public void Update(String id, TypeObjectsDTO typeObject) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sqlBase = " UPDATE type_objects SET type_name = '" + typeObject.type_name + "', description = '" + typeObject.description + "' WHERE id = " + id;

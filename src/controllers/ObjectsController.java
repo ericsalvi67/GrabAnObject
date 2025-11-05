@@ -92,7 +92,6 @@ public class ObjectsController {
         IO.println("------- Atualização de Objetos -------");
         IO.print("Busque por ID (recomendado consulta):");
         String value = _sc.nextLine().trim();
-        _sc.nextLine();
         IO.println("------- Atualização de Objetos -------");
         try {
             List<ObjectsDTO> results = _handler.Select("1", value);
@@ -100,8 +99,8 @@ public class ObjectsController {
                 IO.println("Nenhum objeto encontrado para atualização.");
                 return;
             }
-            showObjects(results);
 
+            IO.println("===================================");
             ObjectsDTO newDTO = new ObjectsDTO();
             IO.println("Digite os novos dados do objeto (vazios para manter):");
             IO.print("ID do Tipo (atual: " + results.get(0).type_id + "): ");
@@ -114,7 +113,7 @@ public class ObjectsController {
             String newStatus = _sc.nextLine().trim();
             newDTO.status = newStatus.isEmpty() ? results.get(0).status : newStatus.toUpperCase();
 
-            _handler.Insert(newDTO);
+            _handler.Update(value, newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir objeto: " + e.getMessage());

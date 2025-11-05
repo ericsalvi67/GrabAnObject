@@ -25,7 +25,7 @@ public class TypeObjectsHandler {
         _query.Insert(newDTO);
     }
 
-    public void Update(int id, TypeObjectsDTO newDTO) throws Exception {
+    public void Update(String id, TypeObjectsDTO newDTO) throws Exception {
         if (newDTO.type_name.isBlank())
             throw new IllegalArgumentException("Nome do tipo não pode estar em branco");
         if (newDTO.description.isBlank())

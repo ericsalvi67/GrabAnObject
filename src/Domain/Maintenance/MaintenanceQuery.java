@@ -13,7 +13,7 @@ public class MaintenanceQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<MaintenanceDTO> list = new ArrayList<>();
-        String sql = "SELECT id, user_id, object_id, service_type, description, performed_at, deleted FROM maintenance WHERE " + GetType(type, value) + " ORDER BY id";
+        String sql = "SELECT id, user_id, object_id, service_type, description, performed_at, on_maintenance FROM maintenance WHERE " + GetType(type, value) + " ORDER BY id";
 
         try {
             ResultSet result = conn.runQuerySQL(sql);
@@ -25,7 +25,7 @@ public class MaintenanceQuery {
                 maintenance.service_type = result.getString("service_type");
                 maintenance.description = result.getString("description");
                 maintenance.performed_at = result.getDate("performed_at");
-                maintenance.deleted = result.getBoolean("deleted");
+                maintenance.on_maintenance = result.getBoolean("on_maintenance");
                 list.add(maintenance);
             }
         } catch (SQLException e) {
@@ -53,7 +53,7 @@ public class MaintenanceQuery {
         }
     }
 
-    public void Update(int id, MaintenanceDTO maintenance) throws DataBaseException {
+    public void Update(String id, MaintenanceDTO maintenance) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sqlBase = " UPDATE maintenance SET service_type = '" + maintenance.service_type + "', description = '" + maintenance.description + "' WHERE id = " + id;

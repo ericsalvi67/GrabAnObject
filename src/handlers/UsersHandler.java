@@ -25,7 +25,7 @@ public class UsersHandler {
         _query.Insert(newDTO);
     }
 
-    public void Update(int id, UsersDTO newDTO) throws Exception {
+    public void Update(String id, UsersDTO newDTO) throws Exception {
         if (newDTO.name.isBlank())
             throw new IllegalArgumentException("Nome não pode estar em branco");
         if (newDTO.email.isBlank() || !newDTO.email.contains("@")) 

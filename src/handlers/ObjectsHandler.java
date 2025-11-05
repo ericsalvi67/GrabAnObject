@@ -27,9 +27,7 @@ public class ObjectsHandler {
         return _query.Select(type, value);
     }
 
-    public void Update(int id, ObjectsDTO newDTO) throws Exception {
-        if (newDTO.type_id <= 0)
-            throw new IllegalArgumentException("ID do Tipo não pode estar em branco");
+    public void Update(String id, ObjectsDTO newDTO) throws Exception {
         if (newDTO.object_name.isBlank())
             throw new IllegalArgumentException("Nome do Objeto não pode estar em branco");
         if (!newDTO.status.contains("A") && !newDTO.status.contains("M") && !newDTO.status.contains("B") && !newDTO.status.contains("L"))

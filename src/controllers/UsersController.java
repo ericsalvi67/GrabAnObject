@@ -88,7 +88,6 @@ public class UsersController{
         IO.println("------- Atualização de Usuário -------");
         IO.print("Busque por ID (recomendado consulta):");
         String value = _sc.nextLine().trim();
-        _sc.nextLine();
         IO.println("------- Atualização de Usuário -------");
         try {
             List<UsersDTO> results = _handler.Select("1", value);
@@ -96,8 +95,8 @@ public class UsersController{
                 IO.println("Nenhum usuário encontrado para atualização.");
                 return;
             }
-            showUsers(results);
 
+            IO.println("===================================");
             UsersDTO newDTO = new UsersDTO();
             IO.println("Digite os novos dados do usuário (vazios para manter):");
             IO.print("Nome (atual: " + results.get(0).name + "): ");
@@ -107,7 +106,7 @@ public class UsersController{
             String newEmail = _sc.nextLine().trim();
             newDTO.email = newEmail.isEmpty() ? results.get(0).email : newEmail.toUpperCase();
 
-            _handler.Insert(newDTO);
+            _handler.Update(value, newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());
@@ -116,10 +115,9 @@ public class UsersController{
 
     private void showUsers(List<UsersDTO> results) {
         IO.println("======= Resultados da Busca =======");
-        IO.println(" Situação | ID |     Nome      |       Email       ");
+        IO.println(" ID |     Nome      |       Email       ");
         for (UsersDTO user : results) {
-            IO.println(String.format("%7s | %3s | %20s | %25s", 
-                user.deleted ? "Inativo" : "Ativo", user.id, user.name, user.email));
+            IO.println(String.format("%3s | %20s | %25s", user.id, user.name, user.email));
         }
         IO.println("===================================");
     }

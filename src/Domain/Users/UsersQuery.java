@@ -50,7 +50,7 @@ public class UsersQuery{
 		}
     }
 
-    public void Update(int id, UsersDTO user) throws DataBaseException {
+    public void Update(String id, UsersDTO user) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sqlBase = " UPDATE users SET name = '" + user.name + "', email = '" + user.email + "' WHERE id = " + id;

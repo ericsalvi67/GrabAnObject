@@ -32,7 +32,7 @@ CREATE TABLE maintenance (
     service_type varchar(255) NOT NULL,
     description varchar(1000) NOT NULL,
     performed_at timestamp NOT NULL,
-    on_maintenance boolean NOT NULL DEFAULT FALSE,
+    on_maintenance boolean NOT NULL DEFAULT TRUE,
     last_modification timestamp NOT NULL DEFAULT now(),
 	CONSTRAINT maintenance_pk PRIMARY KEY (id),
 	CONSTRAINT objects_fk FOREIGN KEY (object_id) REFERENCES objects(id),

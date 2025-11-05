@@ -30,11 +30,7 @@ public class MaintenanceHandler {
         _query.Insert(newDTO);
     }
 
-    public void Update(int id, MaintenanceDTO newDTO) throws Exception {
-        if (newDTO.user_id <= 0)
-            throw new IllegalArgumentException("ID do Usuário não pode estar em branco");
-        if (newDTO.object_id <= 0)
-            throw new IllegalArgumentException("ID do Objeto é inválido");
+    public void Update(String id, MaintenanceDTO newDTO) throws Exception {
         if (newDTO.service_type.isBlank())
             throw new IllegalArgumentException("Tipo de serviço não pode estar em branco");
         if (newDTO.description.isBlank())

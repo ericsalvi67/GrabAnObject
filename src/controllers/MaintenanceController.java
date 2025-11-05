@@ -96,7 +96,6 @@ public class MaintenanceController{
         IO.println("------- Atualização de Manutenção -------");
         IO.print("Busque por ID (recomendado consulta):");
         String value = _sc.nextLine().trim();
-        _sc.nextLine();
         IO.println("------- Atualização de Manutenção -------");
         try {
             List<MaintenanceDTO> results = _handler.Select("1", value);
@@ -104,8 +103,8 @@ public class MaintenanceController{
                 IO.println("Nenhum registro de manutenção encontrado para atualização.");
                 return;
             }
-            showMaintenance(results);
 
+            IO.println("===================================");
             MaintenanceDTO newDTO = new MaintenanceDTO();
             IO.println("Digite os novos dados da manutenção (vazios para manter):");
             IO.print("Tipo de Serviço (atual: " + results.get(0).service_type + "): ");
@@ -114,11 +113,11 @@ public class MaintenanceController{
             IO.print("Descrição (atual: " + results.get(0).description + "): ");
             String newDescription = _sc.nextLine().trim();
             newDTO.description = newDescription.isEmpty() ? results.get(0).description : newDescription;
-            IO.print("Status (A-Ativa, E-Encerrada) (atual: " + (results.get(0).deleted ? "E-Encerrada" : "A-Ativa") + "): ");
+            IO.print("Status (A-Ativa, E-Encerrada) (atual: " + (!results.get(0).on_maintenance ? "E-Encerrada" : "A-Ativa") + "): ");
             String newStatus = _sc.nextLine().trim();
-            newDTO.deleted = newStatus.isEmpty() ? results.get(0).deleted : newStatus.equalsIgnoreCase("E-Encerrada");
+            newDTO.on_maintenance = newStatus.isEmpty() ? results.get(0).on_maintenance : newStatus.equals("A")? true : false;
 
-            _handler.Insert(newDTO);
+            _handler.Update(value, newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());
@@ -130,7 +129,7 @@ public class MaintenanceController{
             IO.println(" Situação | ID | ID do Usuário | ID do Objeto | Realizada em | Tipo de Serviço | Descrição");
             for (MaintenanceDTO maintenance : results) {
                 IO.println(String.format("%7s | %3s | %12s | %12s | %15s | %25s", 
-					maintenance.deleted ? "Encerrada" : "Ativa", maintenance.id, maintenance.user_id, maintenance.object_id, maintenance.performed_at, maintenance.service_type, maintenance.description));
+					!maintenance.on_maintenance ? "Encerrada" : "Ativa", maintenance.id, maintenance.user_id, maintenance.object_id, maintenance.performed_at, maintenance.service_type, maintenance.description));
             }
             IO.println("===================================");
     }
