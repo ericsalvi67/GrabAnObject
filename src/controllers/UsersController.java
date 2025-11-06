@@ -4,6 +4,7 @@ import java.util.*;
 
 import Domain.Users.UsersDTO;
 import handlers.UsersHandler;
+import lib.SearchValues;
 
 
 public class UsersController{
@@ -11,40 +12,34 @@ public class UsersController{
     private static UsersHandler _handler = new UsersHandler();
     
     public void register() {
-        UsersDTO dto = new UsersDTO();
+        UsersDTO newDTO = new UsersDTO();
+
         IO.println("------- Cadastro de Usuário -------");
         IO.print("Nome: ");
-        dto.name = _sc.nextLine().trim().toUpperCase();
+        newDTO.name = _sc.nextLine().trim().toUpperCase();
         IO.print("Email: ");
-        dto.email = _sc.nextLine().trim().toUpperCase();
-        IO.println("-----------------------------------");
-        dto.showDTO();
+        newDTO.email = _sc.nextLine().trim().toUpperCase();
+        IO.println("------- Cadastro de Usuário -------");
+
+        newDTO.showDTO();
 
         try {
-            _handler.Insert(dto);
+            _handler.Insert(newDTO);
         } catch (Exception e) {
             IO.println("Erro ao cadastrar usuário: " + e.getMessage());
       }
     }
 
     public void search() {
-        String value = "";
-
-        IO.println("------- Busca de Usuário -------");
-        IO.println("Selecione o campo de busca:");
-        IO.println("1. ID");
-        IO.println("2. Nome");
-        IO.println("3. Email");
-        IO.print("Opção: ");
-        String option = _sc.nextLine().trim();
-        if (option.equals("1") || option.equals("2") || option.equals("3")) {
-            IO.print("Digite o valor da busca: ");
-            value = _sc.nextLine().trim().toUpperCase();
-        }
-        IO.println("------- Busca de Usuário -------");
+        SearchValues search = searchUser("Busca");
 
         try {
-            List<UsersDTO> results = _handler.Select(option, value);
+            List<UsersDTO> results = _handler.Select(search.type, search.value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum usuário encontrado para exclusão.");
+                return;
+            }
+
             showUsers(results);
         } catch (Exception e) {
             IO.println("Erro durante a busca: " + e.getMessage());
@@ -52,30 +47,19 @@ public class UsersController{
     }
 
     public void delete() {
-        String value = "";
+        SearchValues search = searchUser("Exclusão");
 
-        IO.println("------- Exclusão de Usuário -------");
-        IO.println("Selecione o campo de busca:");
-        IO.println("1. ID");
-        IO.println("2. Nome");
-        IO.println("3. Email");
-        IO.print("Opção: ");
-        String option = _sc.nextLine().trim();
-        if (option.equals("1") || option.equals("2") || option.equals("3")) {
-            IO.print("Digite o valor da busca: ");
-            value = _sc.nextLine().trim().toUpperCase();
-        }
-        IO.println("------- Exclusão de Usuário -------");
         try {
-            List<UsersDTO> results = _handler.Select(option, value);
+            List<UsersDTO> results = _handler.Select(search.type, search.value);
             if (results.isEmpty()) {
                 IO.println("Nenhum usuário encontrado para exclusão.");
                 return;
             }
+
             showUsers(results);
+
             IO.print("Digite o ID do usuário que deseja excluir: ");
-            int id = _sc.nextInt();
-            _sc.nextLine();
+            String id = _sc.nextLine().trim();
 
             _handler.Delete(id);
 
@@ -85,31 +69,33 @@ public class UsersController{
     }
 
     public void update() {
-        IO.println("------- Atualização de Usuário -------");
-        IO.print("Busque por ID (recomendado consulta):");
-        String value = _sc.nextLine().trim();
-        IO.println("------- Atualização de Usuário -------");
+        SearchValues search = searchUser("Atualização");
+        
         try {
-            List<UsersDTO> results = _handler.Select("1", value);
+            List<UsersDTO> results = _handler.Select(search.type, search.value);
             if (results.isEmpty()) {
                 IO.println("Nenhum usuário encontrado para atualização.");
                 return;
             }
+            showUsers(results);
 
-            IO.println("===================================");
             UsersDTO newDTO = new UsersDTO();
-            IO.println("Digite os novos dados do usuário (vazios para manter):");
-            IO.print("Nome (atual: " + results.get(0).name + "): ");
-            String newName = _sc.nextLine().trim();
-            newDTO.name = newName.isEmpty() ? results.get(0).name : newName.toUpperCase();
-            IO.print("Email (atual: " + results.get(0).email + "): ");
-            String newEmail = _sc.nextLine().trim();
-            newDTO.email = newEmail.isEmpty() ? results.get(0).email : newEmail.toUpperCase();
+            IO.print("Digite o ID do usuário que deseja atualizar: ");
+            String id = _sc.nextLine().trim();
+            UsersDTO oldDTO = new UsersDTO();
+            oldDTO = (results.get(Integer.parseInt(id)));
 
-            _handler.Update(value, newDTO);
+            IO.println("Digite os novos dados do usuário (vazio para manter o dado):");
+            IO.print("Nome (atual: " + oldDTO.name + "): ");
+            newDTO.name = _sc.nextLine().trim().toUpperCase();
+            
+            IO.print("Email (atual: " + oldDTO.email + "): ");
+            newDTO.email = _sc.nextLine().trim().toUpperCase();
+
+            _handler.Update(id, oldDTO, newDTO);
 
         } catch (Exception e) {
-            IO.println("Erro ao excluir usuário: " + e.getMessage());
+            IO.println("Erro ao atualizar usuário: " + e.getMessage());
         }
     }
 
@@ -120,5 +106,25 @@ public class UsersController{
             IO.println(String.format("%3s | %20s | %25s", user.id, user.name, user.email));
         }
         IO.println("===================================");
+    }
+
+    private SearchValues searchUser(String param) 
+    {
+        SearchValues search = new SearchValues();
+
+        IO.println("------- "+ param +" de Usuário -------");
+        IO.println("Selecione o campo de busca:");
+        IO.println("1. ID");
+        IO.println("2. Nome");
+        IO.println("3. Email");
+        IO.print("Opção: ");
+        search.type = _sc.nextLine().trim();
+        if (search.type.equals("1") || search.type.equals("2") || search.type.equals("3")) {
+            IO.print("Digite o valor da busca: ");
+            search.value = _sc.nextLine().trim().toUpperCase();
+        }
+        IO.println("------- "+ param +" de Usuário -------");
+
+        return search;
     }
 }
