@@ -38,7 +38,11 @@ public class MaintenanceHandler {
         _query.Insert(newDTO);
     }
 
-    public void Update(String id, MaintenanceDTO newDTO) throws Exception {
+    public void Update(String id, MaintenanceDTO oldDTO, MaintenanceDTO newDTO) throws Exception {
+        newDTO.service_type = newDTO.service_type.isEmpty() ? oldDTO.service_type : newDTO.service_type;
+        newDTO.description = newDTO.description.isEmpty() ? oldDTO.description : newDTO.description;
+        newDTO.on_maintenance = newDTO.on_maintenance ? oldDTO.on_maintenance : newDTO.on_maintenance;
+
         if (newDTO.service_type.isBlank())
             throw new IllegalArgumentException("Tipo de serviço não pode estar em branco");
         if (newDTO.description.isBlank())
@@ -47,8 +51,8 @@ public class MaintenanceHandler {
         _query.Update(id, newDTO);
     }
 
-    public void Delete(int id) throws DataBaseException {
-        if (id <= 0 || id == 0) {
+    public void Delete(String id) throws DataBaseException {
+        if (id == null || id.trim().isEmpty() || Integer.parseInt(id) <= 0) {
             throw new IllegalArgumentException("ID inválido para exclusão");
         }
         _query.Delete(id);

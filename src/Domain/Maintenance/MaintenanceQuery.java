@@ -70,7 +70,7 @@ public class MaintenanceQuery {
 			conn.closeConnection();
 		}
     }
-    public void Delete(int id) throws DataBaseException {
+    public void Delete(String id) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
 		String sqlBase = " DELETE FROM maintenance WHERE id = " + id;
