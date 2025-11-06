@@ -36,7 +36,7 @@ public class UsersController{
         try {
             List<UsersDTO> results = _handler.Select(search.type, search.value);
             if (results.isEmpty()) {
-                IO.println("Nenhum usuário encontrado para exclusão.");
+                IO.println("Nenhum usuário encontrado para pesquisa.");
                 return;
             }
 

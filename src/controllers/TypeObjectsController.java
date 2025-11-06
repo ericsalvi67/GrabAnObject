@@ -11,40 +11,31 @@ public class TypeObjectsController {
     private static final TypeObjectsHandler _handler = new TypeObjectsHandler();
 
     public void register() {
-        TypeObjectsDTO dto = new TypeObjectsDTO();
+        TypeObjectsDTO newDTO = new TypeObjectsDTO();
         IO.println("------- Cadastro de Tipo -------");
         IO.print("Nome do tipo: ");
-        dto.type_name = _sc.nextLine().trim().toUpperCase();
+        newDTO.type_name = _sc.nextLine().trim().toUpperCase();
         IO.print("Descrição: ");
-        dto.description = _sc.nextLine().trim().toUpperCase();
+        newDTO.description = _sc.nextLine().trim().toUpperCase();
         IO.println("--------------------------------");
-        dto.showDTO();
+        newDTO.showDTO();
 
         try {
-            _handler.Insert(dto);
+            _handler.Insert(newDTO);
         } catch (Exception e) {
           IO.println("Erro ao cadastrar tipo de objeto: " + e.getMessage());
         }
     }
 
     public void search() {
-        String value = "";
-
-        IO.println("------- Busca de Tipo de Objeto -------");
-        IO.println("Selecione o campo de busca:");
-		IO.println("1. ID");
-		IO.println("2. Nome do Tipo");
-		IO.println("3. Descrição");
-		IO.print("Opção: ");
-        String option = _sc.nextLine().trim();
-        if (option.equals("1") || option.equals("2") || option.equals("3")) {
-            IO.print("Digite o valor da busca: ");
-            value = _sc.nextLine().trim().toUpperCase();
-        }
-        IO.println("------- Busca de Tipo de Objeto -------");
+        SearchValues search = searchTypeObjects("Busca");
 
         try {
-            List<TypeObjectsDTO> results = _handler.Select(option, value);
+            List<TypeObjectsDTO> results = _handler.Select(search.type, search.value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum tipo de objeto encontrado para pesquisa.");
+                return;
+            }
             showTypeObjects(results);
         } catch (Exception e) {
             IO.println("Erro durante a busca: " + e.getMessage());
@@ -104,7 +95,6 @@ public class TypeObjectsController {
         }
     }
     
-
     public void showTypeObjects(List<TypeObjectsDTO> list) {
         IO.println("======= Resultados da Busca =======");
         IO.println(" ID |  Nome do Tipo  | Descrição");

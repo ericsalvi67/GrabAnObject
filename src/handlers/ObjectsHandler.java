@@ -27,7 +27,11 @@ public class ObjectsHandler {
         return _query.Select(type, value);
     }
 
-    public void Update(String id, ObjectsDTO newDTO) throws Exception {
+    public void Update(String id, ObjectsDTO oldDTO, ObjectsDTO newDTO) throws Exception {
+        newDTO.type_id = newDTO.type_id == 0 ? oldDTO.type_id : newDTO.type_id;
+        newDTO.object_name = newDTO.object_name.isEmpty() ? oldDTO.object_name : newDTO.object_name.toUpperCase();
+        newDTO.status = newDTO.status.isEmpty() ? oldDTO.status : newDTO.status.toUpperCase();
+
         if (newDTO.object_name.isBlank())
             throw new IllegalArgumentException("Nome do Objeto não pode estar em branco");
         if (!newDTO.status.contains("A") && !newDTO.status.contains("M") && !newDTO.status.contains("B") && !newDTO.status.contains("L"))
@@ -36,8 +40,8 @@ public class ObjectsHandler {
         _query.Update(id, newDTO);
     }
 
-    public void Delete(int id) throws DataBaseException {
-        if (id <= 0 || id == 0) {
+    public void Delete(String id) throws DataBaseException {
+       if (id == null || id.trim().isEmpty() || Integer.parseInt(id) <= 0) {
             throw new IllegalArgumentException("ID inválido para exclusão");
         }
         _query.Delete(id);
