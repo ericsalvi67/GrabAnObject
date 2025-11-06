@@ -4,6 +4,7 @@ import java.util.*;
 
 import Domain.TypeObjects.TypeObjectsDTO;
 import handlers.TypeObjectsHandler;
+import lib.SearchValues;
 
 public class TypeObjectsController {
     private static Scanner _sc = new Scanner(System.in);
@@ -51,30 +52,19 @@ public class TypeObjectsController {
     }
 
     public void delete() {
-        String value = "";
+        SearchValues search = searchTypeObjects("Exclusão");
 
-        IO.println("------- Exclusão de Tipo de Objeto -------");
-        IO.println("Selecione o campo de busca:");
-        IO.println("1. ID");
-        IO.println("2. Nome do tipo de objeto");
-        IO.println("3. Descrição");
-        IO.print("Opção: ");
-        String option = _sc.nextLine().trim();
-        if (option.equals("1") || option.equals("2") || option.equals("3")) {
-            IO.print("Digite o valor da busca: ");
-            value = _sc.nextLine().trim().toUpperCase();
-        }
-        IO.println("------- Exclusão de Tipo de Objeto -------");
         try {
-            List<TypeObjectsDTO> results = _handler.Select(option, value);
+            List<TypeObjectsDTO> results = _handler.Select(search.type, search.value);
             if (results.isEmpty()) {
                 IO.println("Nenhum tipo de objeto encontrado para exclusão.");
                 return;
             }
+
             showTypeObjects(results);
+
             IO.print("Digite o ID do tipo de objeto que deseja excluir: ");
-            int id = _sc.nextInt();
-            _sc.nextLine();
+            String id = _sc.nextLine().trim();
 
             _handler.Delete(id);
 
@@ -84,28 +74,30 @@ public class TypeObjectsController {
     }
 
     public void update() {
-        IO.println("------- Atualização de Tipo de Objeto -------");
-        IO.print("Busque por ID (recomendado consulta):");
-        String value = _sc.nextLine().trim();
-        IO.println("------- Atualização de Tipo de Objeto -------");
+        SearchValues search = searchTypeObjects("Atualização");
+
         try {
-            List<TypeObjectsDTO> results = _handler.Select("1", value);
+            List<TypeObjectsDTO> results = _handler.Select(search.type, search.value);
             if (results.isEmpty()) {
                 IO.println("Nenhum tipo de objeto encontrado para atualização.");
                 return;
             }
+            showTypeObjects(results);
 
-            IO.println("===================================");
             TypeObjectsDTO newDTO = new TypeObjectsDTO();
-            IO.println("Digite os novos dados do tipo de objeto (vazios para manter):");
-            IO.print("Nome (atual: " + results.get(0).type_name + "): ");
-            String newName = _sc.nextLine().trim();
-            newDTO.type_name = newName.isEmpty() ? results.get(0).type_name : newName.toUpperCase();
-            IO.print("Descrição (atual: " + results.get(0).description + "): ");
-            String newDescription = _sc.nextLine().trim();
-            newDTO.description = newDescription.isEmpty() ? results.get(0).description : newDescription.toUpperCase();
+            IO.print("Digite o ID do tipo que deseja atualizar: ");
+            String id = _sc.nextLine().trim();
+            TypeObjectsDTO oldDTO = new TypeObjectsDTO();
+            oldDTO = (results.get(Integer.parseInt(id)));
 
-            _handler.Update(value, newDTO);
+            IO.println("Digite os novos dados do tipo de objeto (vazio para manter o dado):");
+            IO.print("Nome (atual: " + oldDTO.type_name + "): ");
+            newDTO.type_name = _sc.nextLine().trim();
+
+            IO.print("Descrição (atual: " + oldDTO.description + "): ");
+            newDTO.description = _sc.nextLine().trim();
+
+            _handler.Update(id, oldDTO, newDTO);
 
         } catch (Exception e) {
             IO.println("Erro ao excluir usuário: " + e.getMessage());
@@ -120,5 +112,25 @@ public class TypeObjectsController {
             IO.println(String.format("%3s | %14s | %25s", typeObject.id, typeObject.type_name, typeObject.description));
         }
         IO.println("===================================");
+    }
+
+    private SearchValues searchTypeObjects(String param) 
+    {
+        SearchValues search = new SearchValues();
+
+        IO.println("------- "+ param +" de Tipo de Objeto -------");
+        IO.println("Selecione o campo de busca:");
+        IO.println("1. ID");
+        IO.println("2. Nome do tipo de objeto");
+        IO.println("3. Descrição");
+        IO.print("Opção: ");
+        search.type = _sc.nextLine().trim();
+        if (search.type.equals("1") || search.type.equals("2") || search.type.equals("3")) {
+            IO.print("Digite o valor da busca: ");
+            search.value = _sc.nextLine().trim().toUpperCase();
+        }
+        IO.println("------- "+ param +" de Tipo de Objeto -------");
+
+        return search;
     }
 }

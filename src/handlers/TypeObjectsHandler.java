@@ -25,7 +25,10 @@ public class TypeObjectsHandler {
         _query.Insert(newDTO);
     }
 
-    public void Update(String id, TypeObjectsDTO newDTO) throws Exception {
+    public void Update(String id, TypeObjectsDTO oldDTO, TypeObjectsDTO newDTO) throws Exception {
+        newDTO.type_name = newDTO.type_name.isEmpty() ? oldDTO.type_name : newDTO.type_name.toUpperCase();
+        newDTO.description = newDTO.description.isEmpty() ? oldDTO.description : newDTO.description.toUpperCase();
+
         if (newDTO.type_name.isBlank())
             throw new IllegalArgumentException("Nome do tipo não pode estar em branco");
         if (newDTO.description.isBlank())
@@ -34,8 +37,8 @@ public class TypeObjectsHandler {
         _query.Update(id, newDTO);
     }
 
-    public void Delete(int id) throws DataBaseException {
-        if (id <= 0 || id == 0) {
+    public void Delete(String id) throws DataBaseException {
+        if (id == null || id.trim().isEmpty() || Integer.parseInt(id) <= 0) {
             throw new IllegalArgumentException("ID inválido para exclusão");
         }
         _query.Delete(id);
