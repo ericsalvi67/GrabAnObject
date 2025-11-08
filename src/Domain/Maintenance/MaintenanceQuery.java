@@ -40,10 +40,9 @@ public class MaintenanceQuery {
 
    public void Insert(MaintenanceDTO maintenance) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
-
-    String sql = " INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
-            " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now()) ";
-    String sql2 = " UPDATE objects SET status = 'M' WHERE id = " + maintenance.object_id + ";";
+        String sql = " INSERT INTO maintenance (user_id, object_id, service_type, description, performed_at) " +
+                " VALUES (" + maintenance.user_id + ", " + maintenance.object_id + ", '" + maintenance.service_type + "', '" + maintenance.description + "', now()) ";
+        String sql2 = " UPDATE objects SET status = 'M' WHERE id = " + maintenance.object_id + ";";
 
         try {
             conn.runSQL(sql);
@@ -90,11 +89,11 @@ public class MaintenanceQuery {
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " id = " + value;
+                return " id in (" + value + ")";
             case "2": // ID do Usuário
-                return " user_id = " + value;
+                return " user_id in (" + value + ")";
             case "3": // ID do Objeto
-                return " object_id = " + value;
+                return " object_id in (" + value + ")";
             case "4": // Tipo de Serviço
                 return " service_type LIKE '%" + value + "%'";
             case "5": // Descrição

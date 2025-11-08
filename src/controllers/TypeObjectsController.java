@@ -76,8 +76,13 @@ public class TypeObjectsController {
             showTypeObjects(results);
 
             TypeObjectsDTO newDTO = new TypeObjectsDTO();
-            IO.print("Digite o ID do tipo que deseja atualizar: ");
-            String id = _sc.nextLine().trim();
+            String id;
+            if (!search.type.equals("1")) {
+                IO.print("Digite o ID que deseja atualizar: ");
+                id = _sc.nextLine().trim();
+            } else {
+                id = Integer.toString(results.get(0).id);
+            }
             TypeObjectsDTO oldDTO = new TypeObjectsDTO();
             oldDTO = (results.get(Integer.parseInt(id)));
 

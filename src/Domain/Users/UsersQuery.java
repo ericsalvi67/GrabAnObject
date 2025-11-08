@@ -13,7 +13,7 @@ public class UsersQuery{
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
     
         List<UsersDTO> list = new ArrayList<>();
-        String sqlBase = "SELECT id, name, email FROM users WHERE NOT deleted " + GetType(type, value) + " ORDER BY id ";
+        String sqlBase = "SELECT id, name, email FROM users WHERE " + GetType(type, value) + " ORDER BY id ";
     
         try {
             ResultSet result = conn.runQuerySQL(sqlBase);
@@ -84,13 +84,13 @@ public class UsersQuery{
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " AND id = " + value;
+                return " id in (" + value + ")";
             case "2": // Nome
-                return " AND name LIKE '%" + value + "%'";
+                return " name LIKE '%" + value + "%'";
             case "3": // Email
-                return " AND email LIKE '%" + value + "%'";
+                return " email LIKE '%" + value + "%'";
             default:
-                return " AND 1=1 ";
+                return " 1=1 ";
         }
     }
 }

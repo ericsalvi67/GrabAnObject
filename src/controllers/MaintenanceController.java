@@ -82,8 +82,13 @@ public class MaintenanceController{
 			showMaintenance(results);
 
 			MaintenanceDTO newDTO = new MaintenanceDTO();
-            IO.print("Digite o ID do usuário que deseja atualizar: ");
-            String id = _sc.nextLine().trim();
+            String id;
+            if (!search.type.equals("1")) {
+                IO.print("Digite o ID que deseja atualizar: ");
+                id = _sc.nextLine().trim();
+            } else {
+                id = Integer.toString(results.get(0).id);
+            }
             MaintenanceDTO oldDTO = new MaintenanceDTO();
             oldDTO = (results.get(Integer.parseInt(id)));
 

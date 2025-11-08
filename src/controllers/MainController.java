@@ -37,6 +37,8 @@ public class MainController {
                 case "4":
                     deletaMenu(sc);
                     break;
+                case "5":
+                    emprestimoMenu(sc);
                 case "0":
                     exit = true;
                     break;
@@ -181,6 +183,41 @@ public class MainController {
                     break;
                 case "4":
                     new MaintenanceController().update();
+                    break;
+                case "0":
+                    back = true;
+                    break;
+                default:
+                    IO.println("Opção inválida.");
+            }
+            IO.println("");
+        }
+    }
+
+    private void emprestimoMenu(Scanner sc) {
+        boolean back = false;
+        while (!back) {
+            IO.println("Realizar Empréstimo");
+            IO.println("");
+            IO.println("1. Incluir");
+            IO.println("2. Consultar");
+            IO.println("3. Atualizar");
+            IO.println("4. Excluir");
+            IO.print("\nEscolha a sua opção: ");
+
+            String opt = sc.nextLine();
+            switch (opt) {
+                case "1":
+                    new LoanController().register();
+                    break;
+                case "2":
+                    new LoanController().search();
+                    break;
+                case "3":
+                    new LoanController().update();
+                    break;
+                case "4":
+                    new LoanController().delete();
                     break;
                 case "0":
                     back = true;

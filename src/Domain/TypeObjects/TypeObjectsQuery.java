@@ -13,7 +13,7 @@ public class TypeObjectsQuery {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
 
         List<TypeObjectsDTO> list = new ArrayList<>();
-        String sql = "SELECT id, type_name, description FROM type_objects WHERE NOT deleted " + GetType(type, value) + " ORDER BY id";
+        String sql = "SELECT id, type_name, description FROM type_objects WHERE " + GetType(type, value) + " ORDER BY id";
 
         try {
             ResultSet result = conn.runQuerySQL(sql);
@@ -83,13 +83,13 @@ public class TypeObjectsQuery {
     private String GetType(String type, String value) {
         switch (type.toLowerCase()) {
             case "1": // ID
-                return " AND id = " + value;
+                return " id in (" + value + ")";
             case "2": // Nome do Tipo
-                return " AND type_name LIKE '%" + value + "%'";
+                return " type_name LIKE '%" + value + "%'";
             case "3": // Descrição
-                return " AND description LIKE '%" + value + "%'";
+                return " description LIKE '%" + value + "%'";
             default:
-                return " AND 1=1 ";
+                return " 1=1 ";
         }
     }
 

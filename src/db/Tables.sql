@@ -39,6 +39,16 @@ CREATE TABLE maintenance (
 	CONSTRAINT users_fk FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE loans (
+	id serial NOT NULL,
+    user_id int4 NOT NULL,
+    object_id varchar(100) NOT NULL,
+    loan_date timestamp NOT NULL,
+    last_modification timestamp NOT NULL DEFAULT now(),
+	CONSTRAINT loan_pk PRIMARY KEY (id),
+	CONSTRAINT users_fk FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 CREATE TABLE exception_logs (
 	id serial NOT NULL,
     type varchar(255) NOT NULL,
