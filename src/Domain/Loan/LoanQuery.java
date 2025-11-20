@@ -12,7 +12,7 @@ public class LoanQuery {
     public List<LoanDTO> Select(String type, String value) throws DataBaseException {
         DataBaseConnectionManager conn = new DataBaseConnectionManager(1, "postgres", "postgres", "postgres");
         List<LoanDTO> list = new ArrayList<>();
-        String sql = "SELECT id, user_id, object_id, loan_date FROM loans WHERE " + GetType(type, value) + " ORDER BY id";
+        String sql = "SELECT id, user_id, object_id, loan_date, returned FROM loans WHERE " + GetType(type, value) + " ORDER BY id";
 
         try {
             ResultSet result = conn.runQuerySQL(sql);
@@ -22,6 +22,7 @@ public class LoanQuery {
                 dto.user_id = result.getInt("user_id");
                 dto.object_id = result.getString("object_id");
                 dto.loan_date = result.getTimestamp("loan_date");
+                dto.returned = result.getBoolean("returned");
                 list.add(dto);
             }
         } catch (SQLException e) {
@@ -57,6 +58,7 @@ public class LoanQuery {
         String sql = "UPDATE loans SET " +
                     "user_id = " + loan.user_id + ", " +
                     "object_id = '" + loan.object_id + "', " +
+                    "returned = " + loan.returned + ", " +
                     "last_modification = now() " +
                     "WHERE id = " + id;
 

@@ -18,7 +18,7 @@ public class MainController {
             IO.println("2. Consultar");
             IO.println("3. Alterar");
             IO.println("4. Excluir");
-            IO.println("5. Realizar empréstimo");
+            IO.println("5. Empréstimo");
             IO.println("6. Relatórios");
             IO.println("0. Sair");
             IO.print("\nEscolha a sua opção: ");
@@ -39,6 +39,10 @@ public class MainController {
                     break;
                 case "5":
                     emprestimoMenu(sc);
+                    break;
+                case "6":
+                    new ReportController().generateReports();
+                    break;
                 case "0":
                     exit = true;
                     break;
@@ -203,6 +207,8 @@ public class MainController {
             IO.println("2. Consultar");
             IO.println("3. Atualizar");
             IO.println("4. Excluir");
+            IO.println("5. Devolver");
+            IO.println("0. Voltar");
             IO.print("\nEscolha a sua opção: ");
 
             String opt = sc.nextLine();
@@ -218,6 +224,9 @@ public class MainController {
                     break;
                 case "4":
                     new LoanController().delete();
+                    break;
+                case "5":
+                    new LoanController().returnLoan();
                     break;
                 case "0":
                     back = true;

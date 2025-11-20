@@ -44,6 +44,7 @@ CREATE TABLE loans (
     user_id int4 NOT NULL,
     object_id varchar(100) NOT NULL,
     loan_date timestamp NOT NULL,
+    returned boolean NOT NULL DEFAULT FALSE,
     last_modification timestamp NOT NULL DEFAULT now(),
 	CONSTRAINT loan_pk PRIMARY KEY (id),
 	CONSTRAINT users_fk FOREIGN KEY (user_id) REFERENCES users(id)

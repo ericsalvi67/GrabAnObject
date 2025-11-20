@@ -9,6 +9,7 @@ public class LoanDTO extends ERDataResources{
     public int user_id;
     public String object_id;
     public Date loan_date;
+    public boolean returned;
 
     public LoanDTO() {}
 

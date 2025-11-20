@@ -92,11 +92,34 @@ public class LoanController {
         }
     }
 
+    public void returnLoan() {
+        SearchValues search = searchLoan("Devolução");
+
+        try {
+            List<LoanDTO> results = _handler.Select(search.type, search.value);
+            if (results.isEmpty()) {
+                IO.println("Nenhum empréstimo encontrado para devolução.");
+                return;
+            }
+            showLoan(results);
+            IO.print("Digite o ID do empréstimo que deseja devolver: ");
+            String id = _sc.nextLine().trim();
+            LoanDTO oldDTO = results.get(0);
+            LoanDTO newDTO = new LoanDTO();
+            newDTO.returned = true;
+
+            _handler.Update(id, oldDTO, newDTO);
+            IO.println("Empréstimo devolvido com sucesso!");
+        } catch (Exception e) {
+            IO.println("Erro ao processar devolução: " + e.getMessage());
+        }
+    }
+
     private void showLoan(List<LoanDTO> results) {
         IO.println("======= Resultados da Busca =======");
-        IO.println(" ID | ID do Usuário | IDs dos Objetos | Data do Empréstimo");
+        IO.println(" ID | ID do Usuário | IDs dos Objetos | Devolvido | Data do Empréstimo ");
         for (LoanDTO loan : results) {
-            IO.println(String.format("%3s | %12s | %16s | %20s", loan.id, loan.user_id, loan.object_id, loan.loan_date));
+            IO.println(String.format("%3s | %12s | %16s | %9s | %20s", loan.id, loan.user_id, loan.object_id, loan.returned ? "Sim" : "Não", loan.loan_date.toString()));
         }
         IO.println("===================================");
     }
