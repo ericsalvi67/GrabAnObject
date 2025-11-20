@@ -31,8 +31,6 @@ public class MaintenanceDTO extends ERDataResources{
 		IO.println("ID do Objeto: " + this.object_id);
 		IO.println("Tipo de serviço: " + this.service_type);
 		IO.println("Descrição: " + this.description);
-        IO.println("Realizada em: " + this.performed_at);
-        IO.println("Em manutenção: " + this.on_maintenance);
 		IO.println("===================================");
 	}
 
