@@ -85,7 +85,7 @@ public class TypeObjectsController {
             }
             TypeObjectsDTO oldDTO = new TypeObjectsDTO();
             oldDTO = results.stream()
-                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .filter(type -> Integer.toString(type.id).equals(id))
                         .findFirst()
                         .orElse(null);
 

@@ -91,7 +91,7 @@ public class MaintenanceController{
             }
             MaintenanceDTO oldDTO = new MaintenanceDTO();
             oldDTO = results.stream()
-                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .filter(maintenance -> Integer.toString(maintenance.id).equals(id))
                         .findFirst()
                         .orElse(null);
 

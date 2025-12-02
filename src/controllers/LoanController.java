@@ -80,7 +80,7 @@ public class LoanController {
             }
             LoanDTO oldDTO = new LoanDTO();
             oldDTO = results.stream()
-                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .filter(loan -> Integer.toString(loan.id).equals(id))
                         .findFirst()
                         .orElse(null);
 

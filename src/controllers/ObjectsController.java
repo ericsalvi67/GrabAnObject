@@ -89,19 +89,19 @@ public class ObjectsController {
             }
             ObjectsDTO oldDTO = new ObjectsDTO();
             oldDTO = results.stream()
-                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .filter(object -> Integer.toString(object.id).equals(id))
                         .findFirst()
                         .orElse(null);
 
             IO.println("Digite os novos dados do objeto (vazio para manter o dado):");
-            IO.print("ID do Tipo (atual: " + results.get(0).type_id + "): ");
+            IO.print("ID do Tipo (atual: " + oldDTO.type_id + "): ");
             newDTO.type_id = _sc.nextInt();
 			_sc.nextLine();
             
-            IO.print("Nome do Objeto (atual: " + results.get(0).object_name + "): ");
+            IO.print("Nome do Objeto (atual: " + oldDTO.object_name + "): ");
             newDTO.object_name = _sc.nextLine().trim();
 
-            IO.print("Status (atual: " + results.get(0).status + "): ");
+            IO.print("Status (atual: " + oldDTO.status + "): ");
             newDTO.status = _sc.nextLine().trim();
 
             _handler.Update(id, oldDTO, newDTO);
