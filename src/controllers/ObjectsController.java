@@ -88,7 +88,10 @@ public class ObjectsController {
                 id = Integer.toString(results.get(0).id);
             }
             ObjectsDTO oldDTO = new ObjectsDTO();
-            oldDTO = (results.get(Integer.parseInt(id)));
+            oldDTO = results.stream()
+                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .findFirst()
+                        .orElse(null);
 
             IO.println("Digite os novos dados do objeto (vazio para manter o dado):");
             IO.print("ID do Tipo (atual: " + results.get(0).type_id + "): ");

@@ -88,7 +88,10 @@ public class UsersController{
                 id = Integer.toString(results.get(0).id);
             }
             UsersDTO oldDTO = new UsersDTO();
-            oldDTO = (results.get(Integer.parseInt(id)));
+            oldDTO = results.stream()
+                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .findFirst()
+                        .orElse(null);
 
             IO.println("Digite os novos dados do usuário (vazio para manter o dado):");
             IO.print("Nome (atual: " + oldDTO.name + "): ");

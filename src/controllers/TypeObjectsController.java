@@ -84,7 +84,10 @@ public class TypeObjectsController {
                 id = Integer.toString(results.get(0).id);
             }
             TypeObjectsDTO oldDTO = new TypeObjectsDTO();
-            oldDTO = (results.get(Integer.parseInt(id)));
+            oldDTO = results.stream()
+                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .findFirst()
+                        .orElse(null);
 
             IO.println("Digite os novos dados do tipo de objeto (vazio para manter o dado):");
             IO.print("Nome (atual: " + oldDTO.type_name + "): ");

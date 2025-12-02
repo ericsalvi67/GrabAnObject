@@ -79,7 +79,10 @@ public class LoanController {
                 id = Integer.toString(results.get(0).id);
             }
             LoanDTO oldDTO = new LoanDTO();
-            oldDTO = (results.get(Integer.parseInt(id)));
+            oldDTO = results.stream()
+                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .findFirst()
+                        .orElse(null);
 
             IO.println("Digite os novos dados do empréstimo (vazio para manter o dado):");
 

@@ -90,7 +90,10 @@ public class MaintenanceController{
                 id = Integer.toString(results.get(0).id);
             }
             MaintenanceDTO oldDTO = new MaintenanceDTO();
-            oldDTO = (results.get(Integer.parseInt(id)));
+            oldDTO = results.stream()
+                        .filter(user -> Integer.toString(user.id).equals(id))
+                        .findFirst()
+                        .orElse(null);
 
             IO.println("Digite os novos dados da manutenção (vazio para manter o dado):");
             IO.print("Tipo de Serviço (atual: " + results.get(0).service_type + "): ");
